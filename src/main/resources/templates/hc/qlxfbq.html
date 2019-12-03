@@ -1,0 +1,908 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>版权录入</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body style="height: 100%">
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-card-header">权利名称及细分</div>
+      <div class="layui-card-body" style="padding: 15px;">
+        <form class="layui-form" action="" lay-filter="component-form-group">
+          <input th:value="${pr.projectId}" id="projectId" name="projectId" type="hidden">
+          <input th:value="${pr.id}" name="id" id="id" type="hidden">
+          <input th:value="${pr.haveType}" name="haveType" id="haveType" type="hidden">
+          <input th:value="${protype}" name="protype" id="protype" type="hidden">
+            <input th:value="${formType}" name="formType" id="formType" type="hidden">
+          <input th:value="${pr.projectType}" name="projectTypeaa" id="projectTypeaa" type="hidden">
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目类别</label>
+                <div class="layui-input-block">
+                    <select name="projectType" id="projectType" lay-filter="projectTypeSelect" >
+                        <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" th:if="${pr.projectType == lx.value}" checked></option>
+                        <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${pr.projectType == lx.value}" ></option>
+                    </select>
+                </div>
+            </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">权利名称</label>
+            <div class="layui-input-block">
+              <select name="f_qlmc" lay-filter="qlmc" id="f_qlmc">
+                  <option th:value="${pr.name}" th:text="${pr.name}"></option>
+              </select>
+            </div>
+          </div>
+
+            <div class="layui-form-item">
+                <button class="layui-btn" lay-submit  lay-filter="selectallyj">全选一级权利</button>
+              <button class="layui-btn" lay-submit  lay-filter="selectallej">全选二级权利</button>
+            </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">一级权利</label>
+            <div class="layui-input-block" id="yjqlcheck">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">其他</label>
+            <div class="layui-input-block" >
+              <input type="text" name="yjqlqt" id="yjqlqt" class="layui-input" yjqlqt="" th:value="${pr.yjqlqt}">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">二级权利</label>
+            <div class="layui-input-block" id="ejqlcheck">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">其他</label>
+            <div class="layui-input-block" >
+              <input type="text" name="ejqlqt" id="ejqlqt"  class="layui-input" ejqlqt="" th:value="${pr.ejqlqt}">
+            </div>
+          </div>
+
+
+          <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">权利限制描述</label>
+            <fieldset class="layui-elem-field">
+              <legend>请按以下格式填写</legend>
+              <div class="layui-field-box" style="color:#FF0000">
+                甲方/授权方/许可方：<br/>
+                乙方/被授权方/被许可方：<br/>
+                内容：
+              </div>
+            </fieldset>
+          <div class="layui-input-block">
+            <textarea name="f_xzms" th:text="${pr.xzms}" id="f_xzms"  class="layui-textarea"></textarea>
+          </div>
+      </div>
+      <div class="layui-form-item layui-form-text" th:if="${qlzrxz == 'yes'}">
+        <label class="layui-form-label">权利转让限制描述</label>
+        <div class="layui-input-block">
+          <textarea name="f_zrxzms" th:text="${pr.zrxzms}" id="f_zrxzms" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+      </div>
+          <hr class="layui-bg-blue"/>
+
+          <div id="dylist" th:if="${dylist != null}" th:each="dypro,dyproStat : ${dylist}">
+            <input type="hidden" name="dyid" dyid="" th:value="${dypro.id}">
+            <div class="layui-form-item">
+              <label class="layui-form-label">地域</label>
+              <div class="layui-input-block">
+                <select name="dj" dy=""  >
+                  <option th:each="lx,lxStat : ${dy}" th:value="${lx.value}" th:text="${lx.value}" th:if="${dypro.dy == lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${dy}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${dypro.dy == lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+              <div class="layui-form-item">
+                  <label class="layui-form-label">地域国家</label>
+                  <div class="layui-input-block" >
+                      <input type="text" name="dygj"  class="layui-input" dygj="" th:value="${dypro.dygj}">
+                  </div>
+              </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">地域细分</label>
+              <div class="layui-input-block" >
+                <input type="text" name="dyxf"  class="layui-input" dyxf="" th:value="${dypro.dyxf}">
+              </div>
+            </div>
+              <!--
+            <div class="layui-form-item">
+              <label class="layui-form-label">状态</label>
+              <div class="layui-input-block">
+                <select name="fxzt"  status="" >
+                  <option th:each="lx,lxStat : ${fxzt}" th:value="${lx.value}" th:text="${lx.value}" th:if="${dypro.status == lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${fxzt}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${dypro.status == lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+            -->
+            <!--
+            <div class="layui-form-item">
+              <label class="layui-form-label">发行/代理发行</label>
+              <div class="layui-input-block">
+                <select name="dlfx"  fx="" >
+                  <option th:each="lx,lxStat : ${dlfx}" th:value="${lx.value}" th:text="${lx.value}" th:if="${dypro.fx == lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${dlfx}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${dypro.fx == lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">独家/非独家</label>
+              <div class="layui-input-block">
+                <select name="dj"  dj="">
+                  <option th:each="lx,lxStat : ${dj}" th:value="${lx.value}" th:text="${lx.value}" th:if="${dypro.dj == lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${dj}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${dypro.dj == lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+            -->
+            <div class="layui-inline">
+              <label class="layui-form-label">权利开始日期</label>
+              <div class="layui-input-inline">
+                <input type="text" name="qlks" sjxz=""  startDate="" th:value="${dypro.startDate}"   autocomplete="off" class="layui-input test-item" >
+                <input type="checkbox" name="sex" ksdd="" value="待定" title="待定" checked th:if="${dypro.ksdd == '1'}">
+                <input type="checkbox" name="sex" ksdd="" value="待定" title="待定" th:if="${dypro.ksdd == '0'}">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">权利结束日期</label>
+              <div class="layui-input-inline">
+                <input type="text" name="qljs" sjxz="" endDate="" th:value="${dypro.endDate}"    autocomplete="off" class="layui-input test-item" >
+                <input type="checkbox" name="sex" jsdd="" value="待定" title="待定" checked th:if="${dypro.jsdd == '1'}">
+                <input type="checkbox" name="sex" jsdd="" value="待定" title="待定"  th:if="${dypro.jsdd == '0'}">
+                  <input type="checkbox" name="sex" jsyj="" value="永久" checked th:if="${dypro.endDateS == null and dypro.jsdd == '0'}" title="永久">
+                <input type="checkbox" name="sex" jsyj="" value="永久" th:if="${dypro.endDateS != null or dypro.jsdd == '1'}" title="永久">
+              </div>
+
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">期限描述</label>
+              <div class="layui-input-block">
+                <input type="text" name="title"  class="layui-input" qlms="" th:value="${dypro.qlms}">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">著作权所属公司</label>
+              <div class="layui-input-block">
+                <input type="text" name="title"  class="layui-input" ssgs="" th:value="${dypro.ssgs}">
+              </div>
+            </div>
+            <div class="layui-form-item" th:if="${sq != 'no'}">
+              <label class="layui-form-label" th:text="${sq}"></label>
+              <div class="layui-input-block">
+                <input type="text" name="title"  class="layui-input" sqf="" th:value="${dypro.sqf}">
+              </div>
+            </div>
+            <div class="layui-form-item" th:if="${bsq != 'no'}">
+              <label class="layui-form-label" th:text="${bsq}"></label>
+              <div class="layui-input-block">
+                <input type="text" name="title" class="layui-input" bsqf="" th:value="${dypro.bsqf}">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">备注</label>
+              <div class="layui-input-block">
+                <textarea type="text" name="title"  class="layui-input" bz="" th:text="${dypro.bz}"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item" th:if="${htmc == 'yes'}">
+              <label class="layui-form-label">合同名称</label>
+              <div class="layui-input-block">
+                <input type="text" name="htmc"  class="layui-input" htmc="" th:value="${dypro.htmc}">
+              </div>
+            </div>
+            <div class="layui-form-item" th:if="${htbc == 'yes'}">
+              <label class="layui-form-label">合同编号</label>
+              <div class="layui-input-block">
+                <input type="text" name="htbh"  class="layui-input" htbh="" th:value="${dypro.htbh}">
+              </div>
+            </div>
+            <!--
+            <div class="layui-form-item">
+              <label class="layui-form-label">备案或许可信息</label>
+              <div class="layui-input-block">
+                <input type="text" name="title"  class="layui-input" xkz="" th:value="${dypro.xkz}">
+              </div>
+            </div>
+            -->
+            <button  th:id="${dypro.id}"  class="layui-btn layui-btn-normal layui-bg-red" lay-filter="deleteDy" lay-submit>
+              <i class="layui-icon">&#xe608;</i>
+              删除
+            </button>
+            <hr class="layui-bg-blue">
+          </div>
+
+
+
+
+
+      <div id="dy">
+        <input type="hidden" name="dyid" dyid="">
+        <div class="layui-form-item">
+          <label class="layui-form-label">地域</label>
+          <div class="layui-input-block">
+            <select name="dj" dy=""  >
+              <option th:each="lx,lxStat : ${dy}" th:value="${lx.value}" th:text="${lx.value}"></option>
+            </select>
+          </div>
+        </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">地域国家</label>
+              <div class="layui-input-block" >
+                  <input type="text" name="dygj"  class="layui-input" dygj="">
+              </div>
+          </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">地域细分</label>
+          <div class="layui-input-block" >
+            <input type="text" name="dyxf"  class="layui-input" dyxf="">
+          </div>
+        </div>
+          <!--
+        <div class="layui-form-item">
+          <label class="layui-form-label">状态</label>
+          <div class="layui-input-block">
+            <select name="fxzt"  status="" >
+              <option th:each="lx,lxStat : ${fxzt}" th:value="${lx.value}" th:text="${lx.value}"></option>
+            </select>
+          </div>
+        </div>
+        -->
+        <!--
+        <div class="layui-form-item">
+          <label class="layui-form-label">发行/代理发行</label>
+          <div class="layui-input-block">
+            <select name="dlfx"  fx="" >
+              <option th:each="lx,lxStat : ${dlfx}" th:value="${lx.value}" th:text="${lx.value}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">独家/非独家</label>
+          <div class="layui-input-block">
+            <select name="dj"  dj="">
+              <option th:each="lx,lxStat : ${dj}" th:value="${lx.value}" th:text="${lx.value}"></option>
+            </select>
+          </div>
+        </div>
+        -->
+        <div class="layui-inline">
+          <label class="layui-form-label">权利开始日期</label>
+          <div class="layui-input-inline">
+            <input type="text" name="qlks" sjxz=""  startDate=""    autocomplete="off" class="layui-input test-item" >
+            <input type="checkbox" name="sex" ksdd="" value="待定" title="待定">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">权利结束日期</label>
+          <div class="layui-input-inline">
+            <input type="text" name="qljs" sjxz="" endDate=""    autocomplete="off" class="layui-input test-item" >
+            <input type="checkbox" name="sex" jsdd="" value="待定" title="待定">
+              <input type="checkbox" name="sex" jsyj="" value="永久" title="永久">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">期限描述</label>
+          <div class="layui-input-block">
+            <input type="text" name="title"  class="layui-input" qlms="">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">著作权所属公司</label>
+          <div class="layui-input-block">
+            <input type="text" name="title"  class="layui-input" ssgs="">
+          </div>
+        </div>
+        <div class="layui-form-item" th:if="${sq != 'no'}">
+          <label class="layui-form-label" th:text="${sq}"></label>
+          <div class="layui-input-block">
+            <input type="text" name="title"  class="layui-input" sqf="">
+          </div>
+        </div>
+        <div class="layui-form-item" th:if="${bsq != 'no'}">
+          <label class="layui-form-label" th:text="${bsq}"></label>
+          <div class="layui-input-block">
+            <input type="text" name="title" class="layui-input" bsqf="">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">备注</label>
+          <div class="layui-input-block">
+            <textarea type="text" name="title"  class="layui-input" bz=""></textarea>
+          </div>
+        </div>
+        <div class="layui-form-item" th:if="${htmc == 'yes'}">
+          <label class="layui-form-label">合同名称</label>
+          <div class="layui-input-block">
+            <input type="text" name="htmc"  class="layui-input" htmc="">
+          </div>
+        </div>
+        <div class="layui-form-item" th:if="${htbc == 'yes'}">
+          <label class="layui-form-label">合同编号</label>
+          <div class="layui-input-block">
+            <input type="text" name="htbh"  class="layui-input" htbh="">
+          </div>
+        </div>
+        <!--
+        <div class="layui-form-item">
+          <label class="layui-form-label">备案或许可信息</label>
+          <div class="layui-input-block">
+            <input type="text" name="title"  class="layui-input" xkz="">
+          </div>
+        </div>
+        -->
+      </div>
+          <div class="layui-form-item">
+            <button class="layui-btn" lay-filter="adddy" lay-submit>
+              <i class="layui-icon">&#xe608;</i> 添加地域详情
+            </button>
+          </div>
+      <div class="layui-form-item layui-layout-admin">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">立即提交</button>
+                <button id="deleteBut" class="layui-btn layui-bg-red" lay-submit lay-filter="deletePro">删除</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    
+  <script src="/static/layuiadmin/layui/layui.js"></script>
+  <script>
+    var ejhtml;
+    var dyhtml;
+    var pro_yjql ="";
+    var pro_ejql
+  layui.config({
+    base: '/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'laydate','jquery'], function(){
+    var $ = layui.$
+    ,admin = layui.admin
+    ,element = layui.element
+    ,layer = layui.layer
+    ,laydate = layui.laydate
+    ,form = layui.form
+    ,$=layui.$;
+    form.render(null, 'component-form-group');
+
+    $("#yjqlqt").hide();
+    $("#ejqlqt").hide();
+    if(window.location.href.indexOf("new") == -1){
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/getProQl",
+        data:  {projectRightId:$("#id").val()},
+        dataType: "text",
+        success: function(res){
+          pro_yjql = decodeURIComponent(res);
+          if(pro_yjql != null && pro_yjql != ''){
+            var yjs = pro_yjql.split(";");
+            if(yjs[0].indexOf('[其他]:') > -1){
+              $("#yjqlqt").show();
+            }
+            if(yjs[1].indexOf('[其他]:') > -1){
+              $("#ejqlqt").show();
+            }
+          }
+        }
+      });
+
+        $.ajax({
+            type: "POST",
+            url: "/hc/form/getYJList",
+            data:  {projectRightId:$("#id").val()},
+            dataType: "json",
+            success: function(res){
+                var html = "";
+                for (var i = 0 ; i < res.length ; i++){
+                    if(res[i].value == "改编权"){
+                        if(pro_yjql.indexOf(res[i].value) == -1){
+                            html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb'  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }else {
+                            html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb' checked  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }
+                    }else if(res[i].value == "广播权"){
+                        if(pro_yjql.indexOf(res[i].value) == -1){
+                            html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb'  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }else {
+                            html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb' checked  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }
+                    }else{
+                        if(pro_yjql.indexOf(res[i].value) == -1){
+                            html = html + "<input type=\"checkbox\" name=\"f_yjql\"   title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }else {
+                            html = html + "<input type=\"checkbox\" name=\"f_yjql\"  checked  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }
+                    }
+                }
+                $("#yjqlcheck").empty();
+                $("#yjqlcheck").append(html);
+                form.render();
+                form.on('checkbox(gb)', function(data){
+                    if(data.elem.checked){
+                        $.ajax({
+                            type: "POST",
+                            url: "/hc/form/getQlxfej",
+                            data: {qlmc:$("#f_qlmc").val(),protype:data.value},
+                            dataType: "json",
+                            success: function(res){
+                                var html = "";
+                                for (var i = 0 ; i < res.length ; i++){
+                                    if(pro_yjql.indexOf(res[i].value) == -1){
+                                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                                    }else{
+                                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                                    }
+                                }
+                                //$("#ejqlcheck").empty();
+                                $("#ejqlcheck").append(html);
+                                form.render();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/hc/form/getEJList",
+            data:  {projectRightId:$("#id").val()},
+            dataType: "json",
+            success: function(res){
+                var html = "";
+                for (var i = 0 ; i < res.length ; i++){
+                    if(pro_yjql.indexOf(res[i].value) == -1){
+                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                    }else{
+                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                    }
+                }
+                //$("#ejqlcheck").empty();
+                $("#ejqlcheck").append(html);
+                form.render();
+            }
+        });
+    }
+    /* 监听指定开关 */
+    form.on('switch(component-form-switchTest)', function(data){
+      layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+        offset: '6px'
+      });
+      layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+    });
+
+    //删除5级按钮绑定
+    form.on('submit(deleteDy)', function(data){
+      var id = $(this).attr("id");
+      layer.confirm('即将删除地域信息，是否确定删除？', {icon: 3, title:'提示',offset: '250px'}, function(index){
+        layer.confirm()
+        $.ajax({
+          type: "POST",
+          url: "/hc/form/deleteDy",
+          data:  {id:id},
+          dataType: "text",
+          success: function(rightId){
+            layer.alert('删除成功');
+            window.location.reload();
+          }
+        });
+      });
+      return false;
+    });
+    
+    /* 监听提交 */
+    form.on('submit(component-form-demo1)', function(data){
+      var match = /^(\d{4})-(\d{2})-(\d{2})$/;
+      var match1 = /^(\d{4})-(\d{2})$/;
+      var match2 = /^(\d{4})$/;
+      var flag1 = false;
+      $("[startDate]").each(function (i){
+        if($(this).val()!= null && $(this).val() != ''){
+          if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
+            flag1 = true;
+          }
+        }
+      });
+      $("[endDate]").each(function (i){
+        if($(this).val()!= null && $(this).val() != ''){
+          if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
+            flag1 = true;
+          }
+        }
+      });
+      if(flag1){
+        layer.alert("日期格式不正确，正确的格式为：YYYY-mm-DD或YYYY-mm或YYYY");
+        return false;
+      }
+      var qlxf = getQlxfStr();
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/saveQlxf",
+        data:  qlxf,
+        dataType: "text",
+        success: function(rightId){
+          var dyStr = getDy();
+          $.ajax({
+            type: "POST",
+            url: "/hc/form/saveDy",
+            data:  {jsonStr:dyStr},
+            dataType: "text",
+            success: function(rightId){
+              var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+              parent.layer.close(index); //再执行关闭
+            }
+          });
+        }
+      });
+      return false;
+    });
+
+
+      /* 监听添加全选1级 */
+      form.on('submit(selectallyj)', function(data){
+         $("[name='f_yjql']").each(function(){
+             if($(this).attr("title") != '其他'){
+               $(this).attr("checked","checked");
+             }
+         });
+         form.render();
+          return false;
+      });
+
+    /* 监听添加全选2级 */
+    form.on('submit(selectallej)', function(data){
+      $("[name='f_ejql']").each(function(){
+        if($(this).attr("title") != '其他'){
+          $(this).attr("checked","checked");
+        }
+      });
+      form.render();
+      return false;
+    });
+
+
+
+    /* 监听添加一行类型 */
+    form.on('submit(adddy)', function(data){
+      if(dyhtml == null || dyhtml == ''){
+        dyhtml = $("#dy").html();
+      }
+      $("#dy").append("<hr class=\"layui-bg-blue\">");
+      $("#dy").append(dyhtml);
+      form.render();
+      return false;
+    });
+    /* 监听添加一行权利名称 */
+    form.on('submit(addQlmc)', function(data){
+      if(ejhtml == null || ejhtml == ''){
+        ejhtml = $("#qlmc-sj").html();
+      }
+      $("#qlmc-sj").append(ejhtml);
+      form.render();
+      return false;
+    });
+
+    form.on('select(qlmc)', function(data){
+      console.log(data.value); //得到被选中的值
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/getQlxf",
+        data: {qlmc:data.value,protype:$("#projectType").val(),formType:$("#formType").val()},
+        dataType: "json",
+        success: function(res){
+          var html = "";
+          for (var i = 0 ; i < res.length ; i++){
+            if(res[i].value == "改编权"){
+              if(pro_yjql.indexOf(res[i].value) == -1){
+                html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb'  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+              }else {
+                html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb' checked  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+              }
+            }else if(res[i].value == "广播权"){
+              if(pro_yjql.indexOf(res[i].value) == -1){
+                html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb'  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+              }else {
+                html = html + "<input type=\"checkbox\" name=\"f_yjql\" lay-filter='gb' checked  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+              }
+            }else if(res[i].value == "其他"){
+              html = html + "<input type=\"checkbox\" name=\"f_yjql\"  lay-filter='yjqtshow' title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+            }else{
+              if(pro_yjql.indexOf(res[i].value) == -1){
+                html = html + "<input type=\"checkbox\" name=\"f_yjql\"   title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+              }else {
+                html = html + "<input type=\"checkbox\" name=\"f_yjql\"  checked  title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+              }
+            }
+          }
+          $("#yjqlcheck").empty();
+          $("#yjqlcheck").append(html);
+          form.render();
+          form.on('checkbox(gb)', function(data){
+            if(data.elem.checked){
+              $.ajax({
+                type: "POST",
+                url: "/hc/form/getQlxfej",
+                data: {qlmc:$("#f_qlmc").val(),protype:data.value},
+                dataType: "json",
+                success: function(res){
+                  var html = "";
+                  for (var i = 0 ; i < res.length ; i++){
+                    if(res[i].value == '其他'){
+                      html = html + "<input type=\"checkbox\" lay-filter='ejqtshow' name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                    }else{
+                      if(pro_yjql.indexOf(res[i].value) == -1){
+                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                      }else{
+                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                      }
+                    }
+
+                  }
+                  //$("#ejqlcheck").empty();
+                  $("#ejqlcheck").append(html);
+                  form.render();
+                }
+              });
+            }
+          });
+          form.on('checkbox(yjqtshow)', function(data){
+            $("#yjqlqt").show();
+          });
+          form.on('checkbox(ejqtshow)', function(data){
+            $("#ejqlqt").show();
+          });
+
+
+        }
+      });
+    });
+
+
+
+
+    form.on('select(projectTypeSelect)', function(data){
+      console.log(data.value); //得到被选中的值
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/getQlmcList",
+        data: {projectType:data.value},
+        dataType: "json",
+        success: function(res){
+          var html = "";
+          var proT = $("#projectTypeaa").val();
+          for (var i = 0 ; i < res.length ; i++){
+            if(proT == res[i].value){
+              html = html + "<option value='" + res[i].value + "' checked>" + res[i].value + "</option>";
+            }else{
+              html = html + "<option value='" + res[i].value + "'>" + res[i].value + "</option>";
+            }
+          }
+          $("#f_qlmc").empty();
+          $("#f_qlmc").append(html);
+          form.render();
+        }
+      });
+    });
+
+
+
+
+    function getQlxfStr(){
+      var id = $("#id").val();
+      var haveType = $("#haveType").val();
+      var projectId = $("#projectId").val();
+      var projectType = $("#projectType").val();
+      var name = $("#f_qlmc").val();
+      var yjName = "";
+      var ejName = "";
+      var xzms = $("#f_xzms").val();
+      var zrxzms = $("#f_zrxzms").val();
+      var yjqtflag = false;
+      var ejqtflag = false;
+      $("input:checkbox:checked").each(function () {
+        if ($(this).attr("name") == 'f_yjql'){
+          if($(this).val() == '其他'){
+            yjqtflag = true;
+          }else{
+            yjName = yjName + $(this).val() + ",";
+          }
+        }
+        if ($(this).attr("name") == 'f_ejql'){
+          if($(this).val() == '其他'){
+            ejqtflag = true;
+          }else{
+            ejName = ejName + $(this).val() +  ",";
+          }
+        }
+      });
+      if(yjqtflag){
+        yjName = yjName + "[其他]:"+ $("#yjqlqt").val();
+      }
+      if(ejqtflag){
+        ejName = ejName + "[其他]:"+ $("#ejqlqt").val();
+      }
+
+      layer.alert(yjName+";"+ejName);
+
+      var res = {
+        id:id,
+        haveType:haveType,
+        projectId:projectId,
+        name:name,
+        yjName:yjName,
+        ejName:ejName,
+        xzms:xzms,
+        zrxzms:zrxzms,
+          projectType:projectType
+      };
+      return res;
+    }
+
+    function getDy() {
+      var data=[];
+      var ids = [];
+      $("[dyid]").each(function (i){
+        ids.push($(this).val());
+      });
+      var dys = [];
+      $("[dy]").each(function (i){
+        dys.push($(this).val());
+      });
+        var dygjs = [];
+        $("[dygj]").each(function (i){
+            dygjs.push($(this).val());
+        });
+      var dyxfs = [];
+      $("[dyxf]").each(function (i){
+        dyxfs.push($(this).val());
+      });
+      var statuss = [];
+      $("[status]").each(function (i){
+        statuss.push($(this).val());
+      });
+      var fxs = [];
+      $("[fx]").each(function (i){
+        fxs.push($(this).val());
+      });
+      var djs = [];
+      $("[dj]").each(function (i){
+        djs.push($(this).val());
+      });
+      var startDates = [];
+      $("[startDate]").each(function (i){
+        startDates.push($(this).val());
+      });
+      var endDates = [];
+      $("[endDate]").each(function (i){
+        endDates.push($(this).val());
+      });
+      var qlmss = [];
+      $("[qlms]").each(function (i){
+        qlmss.push($(this).val());
+      });
+      var ssgss = [];
+      $("[ssgs]").each(function (i){
+        ssgss.push($(this).val());
+      });
+      var sqfs = [];
+      $("[sqf]").each(function (i){
+        sqfs.push($(this).val());
+      });
+      var bsqfs = [];
+      $("[bsqf]").each(function (i){
+        bsqfs.push($(this).val());
+      });
+      var bzs = [];
+      $("[bz]").each(function (i){
+        bzs.push($(this).val());
+      });
+      var htmcs = [];
+      $("[htmc]").each(function (i){
+        htmcs.push($(this).val());
+      });
+      var htbhs = [];
+      $("[htbh]").each(function (i){
+        htbhs.push($(this).val());
+      });
+      var xkzs = [];
+      $("[xkz]").each(function (i){
+        xkzs.push($(this).val());
+      });
+
+      var ksdds = [];
+      $("[ksdd]").each(function (i){
+        if($(this).is(':checked')){
+          ksdds.push("1");
+        }else{
+          ksdds.push("0");
+        }
+      });
+
+      var jsdds = [];
+      $("[jsdd]").each(function (i){
+        if($(this).is(':checked')){
+          jsdds.push("1");
+        }else{
+          jsdds.push("0");
+        }
+      });
+
+      for(var i = 0; i < $("[dy]").length ; i++){
+        var dy = {
+          id: ids[i],
+          dy:dys[i],
+          dygj:dygjs[i],
+          dyxf :dyxfs[i],
+          status : statuss[i],
+          fx : fxs[i],
+          dj : djs[i],
+          startDate :startDates[i],
+          endDate : endDates[i],
+          qlms : qlmss[i],
+          ssgs : ssgss[i],
+          sqf : sqfs[i],
+          bsqf : bsqfs[i],
+          bz : bzs[i],
+          htmc : htmcs[i],
+          htbh : htbhs[i],
+          xkz : xkzs[i],
+          projectId : $("#projectId").val(),
+          projectRightId : $("#id").val(),
+          ksdd:ksdds[i],
+          jsdd:jsdds[i]
+        }
+        data.push(dy);
+      }
+      return JSON.stringify(data);
+    }
+
+    //删除5级按钮绑定
+    form.on('submit(deletePro)', function(data){
+      var id = $("#id").val();
+      layer.confirm('即将删除权利信息，是否确定删除？', {icon: 3, title:'提示',offset: '250px'}, function(index){
+        $.ajax({
+          type: "POST",
+          url: "/hc/form/deleteProRight",
+          data:  {id:id},
+          dataType: "text",
+          success: function(rightId){
+            layer.alert('删除成功');
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+          }
+        });
+      });
+      return false;
+    });
+
+    var ur = window.location.href;
+    if(ur.indexOf('new') >= 0){
+      $("#deleteBut").hide();
+    }
+
+  });
+
+  </script>
+</body>
+</html>

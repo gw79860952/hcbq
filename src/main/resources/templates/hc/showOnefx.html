@@ -1,0 +1,465 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>版权详情</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body style="height: 100%">
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-card-header">发行信息详情</div>
+      <div class="layui-card-body" style="padding: 15px;">
+        <input type="hidden" th:value="${pro.project.id}" id="id">
+        <button type="button" class="layui-btn" lay-filter="edit" lay-submit>
+          编辑发行信息
+        </button>
+        <table class="layui-table" lay-size="lg">
+          <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+          </colgroup>
+          <tbody>
+          <tr>
+            <td style="width: 20%" class="layui-bg-blue">项目名称</td>
+            <td th:text="${pro.project.name}"></td>
+          </tr>
+          <tr>
+            <td style="width: 20%" class="layui-bg-blue">曾用名</td>
+            <td th:text="${pro.project.oldName}"></td>
+          </tr>
+          <tr>
+            <td style="width: 20%" class="layui-bg-blue">关联项目</td>
+            <td th:text="${pro.project.glProName}"></td>
+          </tr>
+          </tbody>
+        </table>
+
+
+        <div class="layui-collapse">
+          <div class="layui-colla-item">
+            <h2 class="layui-colla-title">现有权利</h2>
+            <div class="layui-colla-content ">
+
+              <div class="layui-collapse">
+                <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.xyprojectRightDtoList}">
+                  <h2 class="layui-colla-title" th:text="${ proRight.projectRight.projectType }"></h2>
+                  <div class="layui-colla-content ">
+
+                    <table class="layui-table" >
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">类型</td>
+                        <td th:text="${proRight.projectRight.projectType}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利名称</td>
+                        <td th:text="${proRight.projectRight.name}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分一级</td>
+                        <td th:text="${proRight.projectRight.yjName}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分二级</td>
+                        <td th:text="${proRight.projectRight.ejName}"></td>
+                      </tr>
+                      <tr >
+                        <td style="width: 12%" class="layui-bg-blue">权利限制描述</td>
+                        <td colspan="3"><pre th:text="${proRight.projectRight.xzms}"></pre></td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="layui-table" th:each="proRightDetail,proRightDetailS : ${proRight.projectRightDetailList}">
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">地域</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域国家</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域细分</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dyxf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">独家/非独家</td>
+                        <td colspan="2" th:text="${proRightDetail.dj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">发行/代理发行</td>
+                        <td colspan="2" th:text="${proRightDetail.fx}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利开始日期</td>
+                        <td th:if="${proRightDetail.startDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.startDateS != null}" th:text="${proRightDetail.startDate}"></td>
+                        <td rowspan="2" style="width: 12%" class="layui-bg-blue">期限描述</td>
+                        <td rowspan="2" colspan="3" th:text="${proRightDetail.qlms}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利结束日期</td>
+                        <td th:if="${proRightDetail.endDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.endDateS != null}" th:text="${proRightDetail.endDate}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">著作权所属公司</td>
+                        <td style="width: 20%" th:text="${proRightDetail.ssgs}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">授权方</td>
+                        <td style="width: 20%" th:text="${proRightDetail.sqf}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">转出权利接受方</td>
+                        <td style="width: 20%" th:text="${proRightDetail.bsqf}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="layui-colla-item">
+            <h2 class="layui-colla-title">原始权利</h2>
+            <div class="layui-colla-content ">
+              <div class="layui-collapse">
+
+                <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.ysprojectRightDtoList}">
+                  <h2 class="layui-colla-title" th:text="${proRight.projectRight.projectType }"></h2>
+                  <div class="layui-colla-content ">
+
+                    <table class="layui-table" >
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">类型</td>
+                        <td th:text="${proRight.projectRight.projectType}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利名称</td>
+                        <td th:text="${proRight.projectRight.name}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分一级</td>
+                        <td th:text="${proRight.projectRight.yjName}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分二级</td>
+                        <td th:text="${proRight.projectRight.ejName}"></td>
+                      </tr>
+                      <tr >
+                        <td style="width: 12%" class="layui-bg-blue">权利限制描述</td>
+                        <td colspan="3"><pre th:text="${proRight.projectRight.xzms}"></pre></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利转让限制描述</td>
+                        <td colspan="3" th:text="${proRight.projectRight.zrxzms}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="layui-table" th:each="proRightDetail,proRightDetailS : ${proRight.projectRightDetailList}">
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">地域</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域国家</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域细分</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dyxf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">独家/非独家</td>
+                        <td colspan="2" th:text="${proRightDetail.dj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">发行/代理发行</td>
+                        <td colspan="2" th:text="${proRightDetail.fx}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利开始日期</td>
+                        <td th:if="${proRightDetail.startDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.startDateS != null}" th:text="${proRightDetail.startDate}"></td>
+                        <td rowspan="2" style="width: 12%" class="layui-bg-blue">期限描述</td>
+                        <td rowspan="2" colspan="3" th:text="${proRightDetail.qlms}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利结束日期</td>
+                        <td th:if="${proRightDetail.endDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.endDateS != null}" th:text="${proRightDetail.endDate}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">著作权所属公司</td>
+                        <td colspan="2" th:text="${proRightDetail.ssgs}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">授权方（合作方）</td>
+                        <td colspan="2" th:text="${proRightDetail.sqf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">备注</td>
+                        <td colspan="5" th:text="${proRightDetail.bz}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">合同名称</td>
+                        <td colspan="2" th:text="${proRightDetail.htmc}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">合同编号</td>
+                        <td colspan="2" th:text="${proRightDetail.htbh}"></td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="layui-colla-item">
+            <h2 class="layui-colla-title">授权代理发行</h2>
+            <div class="layui-colla-content ">
+              <div class="layui-collapse">
+
+                <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.zsqprojectRightDtoList}">
+                  <h2 class="layui-colla-title" th:text="${proRight.projectRight.projectType }"></h2>
+                  <div class="layui-colla-content ">
+
+                    <table class="layui-table" >
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">类型</td>
+                        <td th:text="${proRight.projectRight.projectType}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利名称</td>
+                        <td th:text="${proRight.projectRight.name}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分一级</td>
+                        <td th:text="${proRight.projectRight.yjName}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分二级</td>
+                        <td th:text="${proRight.projectRight.ejName}"></td>
+                      </tr>
+                      <tr >
+                        <td style="width: 12%" class="layui-bg-blue">权利限制描述</td>
+                        <td colspan="3"><pre th:text="${proRight.projectRight.xzms}"></pre></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利转让限制描述</td>
+                        <td colspan="3" th:text="${proRight.projectRight.zrxzms}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="layui-table" th:each="proRightDetail,proRightDetailS : ${proRight.projectRightDetailList}">
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">地域</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域国家</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域细分</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dyxf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">独家/非独家</td>
+                        <td colspan="2" th:text="${proRightDetail.dj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">发行/代理发行</td>
+                        <td colspan="2" th:text="${proRightDetail.fx}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利开始日期</td>
+                        <td th:if="${proRightDetail.startDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.startDateS != null}" th:text="${proRightDetail.startDate}"></td>
+                        <td rowspan="2" style="width: 12%" class="layui-bg-blue">期限描述</td>
+                        <td rowspan="2" colspan="3" th:text="${proRightDetail.qlms}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利结束日期</td>
+                        <td th:if="${proRightDetail.endDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.endDateS != null}" th:text="${proRightDetail.endDate}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">著作权所属公司</td>
+                        <td colspan="2" th:text="${proRightDetail.ssgs}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">代理公司</td>
+                        <td colspan="2" th:text="${proRightDetail.sqf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">备注</td>
+                        <td colspan="5" th:text="${proRightDetail.bz}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">合同名称</td>
+                        <td colspan="2" th:text="${proRightDetail.htmc}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">合同编号</td>
+                        <td colspan="2" th:text="${proRightDetail.htbh}"></td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="layui-colla-item">
+            <h2 class="layui-colla-title">发行平台</h2>
+            <div class="layui-colla-content ">
+
+              <div class="layui-collapse">
+
+                <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.qlywzrprojectRightDtoList}">
+                  <h2 class="layui-colla-title" th:text="${proRight.projectRight.projectType }"></h2>
+                  <div class="layui-colla-content ">
+
+                    <table class="layui-table" >
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">类型</td>
+                        <td th:text="${proRight.projectRight.projectType}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利名称</td>
+                        <td th:text="${proRight.projectRight.name}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分一级</td>
+                        <td th:text="${proRight.projectRight.yjName}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">权利细分二级</td>
+                        <td th:text="${proRight.projectRight.ejName}"></td>
+                      </tr>
+                      <tr >
+                        <td style="width: 12%" class="layui-bg-blue">权利限制描述</td>
+                        <td colspan="3"><pre th:text="${proRight.projectRight.xzms}"></pre></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利转让限制描述</td>
+                        <td colspan="3" th:text="${proRight.projectRight.zrxzms}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="layui-table" th:each="proRightDetail,proRightDetailS : ${proRight.projectRightDetailList}">
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">地域</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域国家</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">地域细分</td>
+                        <td style="width: 20%" th:text="${proRightDetail.dyxf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">独家/非独家</td>
+                        <td colspan="2" th:text="${proRightDetail.dj}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">发行/代理发行</td>
+                        <td colspan="2" th:text="${proRightDetail.fx}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利开始日期</td>
+                        <td th:if="${proRightDetail.startDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.startDateS != null}" th:text="${proRightDetail.startDate}"></td>
+                        <td rowspan="2" style="width: 12%" class="layui-bg-blue">期限描述</td>
+                        <td rowspan="2" colspan="3" th:text="${proRightDetail.qlms}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">权利结束日期</td>
+                        <td th:if="${proRightDetail.endDateS == null}" th:text="永久"></td>
+                        <td th:if="${proRightDetail.endDateS != null}" th:text="${proRightDetail.endDate}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">著作权所属公司</td>
+                        <td colspan="2" th:text="${proRightDetail.ssgs}"></td>
+                        <td style="width: 12%" class="layui-bg-blue">播出平台</td>
+                        <td colspan="2" th:text="${proRightDetail.sqf}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">备注</td>
+                        <td colspan="5" th:text="${proRightDetail.bz}"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 12%" class="layui-bg-blue">合同名称</td>
+                        <td colspan="2" th:text="${proRightDetail.htmc}"></td>
+                        <td style="width: 12%" class="layui-bg-blue" >合同编号</td>
+                        <td colspan="2" th:text="${proRightDetail.htbh}"></td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+    
+  <script src="/static/layuiadmin/layui/layui.js"></script>
+  <script>
+    var yjhtml;
+    var ejhtml;
+  layui.config({
+    base: '/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'laydate','jquery'], function(){
+    var $ = layui.$
+    ,admin = layui.admin
+    ,element = layui.element
+    ,layer = layui.layer
+    ,laydate = layui.laydate
+    ,form = layui.form
+    ,$=layui.$;
+    form.render(null, 'component-form-group');
+
+    laydate.render({
+      elem: '#LAY-component-form-group-date'
+    });
+
+    form.on('submit(edit)', function(data){
+      var id = $("#id").val();
+      window.open('/hc/form/show/' + id + '/fx');
+      return false;
+    });
+  });
+  </script>
+</body>
+</html>

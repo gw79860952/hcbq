@@ -1,0 +1,294 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>版权录入</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body style="height: 100%">
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-header">版权录入</div>
+    <div class="layui-card-body" style="padding: 15px;">
+      <form class="layui-form" action="" lay-filter="component-form-group">
+        <input th:value="${pro.id}" name="id" type="hidden" id="id">
+        <input th:value="${pro.formType}" name="formType" type="hidden" id="formType">
+        <div class="layui-form-item">
+          <label class="layui-form-label">项目名称</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" th:value="${pro.name}" id="name" lay-verify="title" autocomplete="off" placeholder="请输入项目名称" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">曾用名</label>
+          <div class="layui-input-block">
+            <input type="text" name="oldName" th:value="${pro.oldName}" id="oldName" lay-verify="title" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">关联项目</label>
+          <div class="layui-input-block">
+            <select name="glProId" id="glProId" lay-filter="aihao" lay-search>
+              <option th:each="ppro,pproStat : ${proList}" th:value="${ppro.id}" th:text="${ppro.name}"></option>
+
+            </select>
+          </div>
+        </div>
+
+
+        <div class="layui-form-item">
+
+
+        </div>
+
+        <blockquote class="layui-elem-quote">现有权利
+          <button class="layui-btn layui-bg-gray" lay-filter="addYjxy" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+        </blockquote>
+        <div>
+          <button th:each="right,rightStat : ${rightsxy}" th:title="${right.yjName}" th:text="${right.projectType+'-'+right.name}" th:id="${right.id+'-'+pro.formType+'-'+right.haveType}"  class="layui-btn layui-btn-normal" lay-filter="openQlmc" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+        </div>
+        <blockquote class="layui-elem-quote">原始权利
+          <button class="layui-btn layui-bg-gray" lay-filter="addYjys" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+        </blockquote>
+        <div>
+          <button th:each="right,rightStat : ${rightsys}" th:title="${right.yjName}" th:text="${right.projectType+'-'+right.name}" th:id="${right.id+'-'+pro.formType+'-'+right.haveType}"  class="layui-btn layui-btn-normal" lay-filter="openQlmc" lay-submit>
+            <i class="layui-icon" >&#xe608;</i>
+          </button>
+        </div>
+        <blockquote class="layui-elem-quote">授权代理发行
+          <button class="layui-btn layui-bg-gray" lay-filter="addYjzsq" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+        </blockquote>
+        <div>
+          <button th:each="right,rightStat : ${rightsqdlfx}" th:title="${right.yjName}" th:text="${right.projectType+'-'+right.name}" th:id="${right.id+'-'+pro.formType+'-'+right.haveType}"  class="layui-btn layui-btn-normal" lay-filter="openQlmc" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+        </div>
+
+        <blockquote class="layui-elem-quote">发行平台
+          <button class="layui-btn layui-bg-gray" lay-filter="addYjqlywzr" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+
+        </blockquote>
+        <div>
+          <button th:each="right,rightStat : ${rightfxpt}" th:title="${right.yjName}" th:text="${right.projectType+'-'+right.name}" th:id="${right.id+'-'+pro.formType+'-'+right.haveType}"  class="layui-btn layui-btn-normal" lay-filter="openQlmc" lay-submit>
+            <i class="layui-icon">&#xe608;</i>
+          </button>
+        </div>
+
+        <div class="layui-form-item layui-layout-admin">
+          <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;">
+              <button class="layui-btn" lay-submit lay-filter="component-form-demo1">立即提交</button>
+              <button id="deleteBut" class="layui-btn layui-bg-red" lay-submit lay-filter="deletePro">删除</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script src="/static/layuiadmin/layui/layui.js"></script>
+<script>
+  var yjhtml;
+  var ejhtml;
+  layui.config({
+    base: '/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'laydate','jquery'], function(){
+    var $ = layui.$
+            ,admin = layui.admin
+            ,element = layui.element
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,form = layui.form
+            ,$=layui.$;
+    form.render(null, 'component-form-group');
+
+    laydate.render({
+      elem: '#LAY-component-form-group-date'
+    });
+
+
+    /* 监听指定开关 */
+    form.on('switch(component-form-switchTest)', function(data){
+      layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+        offset: '6px'
+      });
+      layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+    });
+
+    /* 监听提交 */
+    form.on('submit(component-form-demo1)', function(data){
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/saveShow",
+        data:  data.field,
+        dataType: "text",
+        success: function(res){
+          layer.alert("提交成功");
+        }
+      });
+      return false;
+    });
+
+    /* 监听添加一行类型 */
+    form.on('submit(addYjys)', function(data){
+      //首先保存一级数据
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/saveShow",
+        data:  data.field,
+        dataType: "text",
+        success: function(res){
+          layer.open({
+            type: 2,
+            content: '/hc/form/qlxf/new-'+$("#id").val()+"/"+$("#formType").val()+"/ys",
+            title:'权利名称',
+            area:['1000px','700px'],
+            end: function(){
+              window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
+            }
+          });
+        }
+      });
+      form.render();
+      return false;
+    });
+    /* 监听添加一行类型 */
+    form.on('submit(addYjxy)', function(data){
+      //首先保存一级数据
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/saveShow",
+        data:  data.field,
+        dataType: "text",
+        success: function(res){
+          layer.open({
+            type: 2,
+            content: '/hc/form/qlxf/new-'+$("#id").val()+"/"+$("#formType").val()+"/xy",
+            title:'权利名称',
+            area:['1000px','700px'],
+            end: function(){
+              window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
+            }
+          });
+        }
+      });
+      form.render();
+      return false;
+    });
+    /* 监听添加一行类型 */
+    form.on('submit(addYjzsq)', function(data){
+      //首先保存一级数据
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/saveShow",
+        data:  data.field,
+        dataType: "text",
+        success: function(res){
+          layer.open({
+            type: 2,
+            content: '/hc/form/qlxf/new-'+$("#id").val()+"/"+$("#formType").val()+"/sqdlfx",
+            title:'权利名称',
+            area:['1000px','700px'],
+            end: function(){
+              window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
+            }
+          });
+        }
+      });
+      form.render();
+      return false;
+    });
+
+    form.on('submit(addYjqlywzr)', function(data){
+      //首先保存一级数据
+      $.ajax({
+        type: "POST",
+        url: "/hc/form/saveShow",
+        data:  data.field,
+        dataType: "text",
+        success: function(res){
+          layer.open({
+            type: 2,
+            content: '/hc/form/qlxf/new-'+$("#id").val()+"/"+$("#formType").val()+"/fxpt",
+            title:'权利名称',
+            area:['1000px','700px'],
+            end: function(){
+              window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
+            }
+          });
+        }
+      });
+      form.render();
+      return false;
+    });
+
+    form.on('submit(openQlmc)', function(data){
+      var para = $(this).attr("id").split("-");
+      layer.open({
+        type: 2,
+        content: '/hc/form/qlxf/'+para[0]+"/"+para[1]+"/"+para[2],
+        title:'权利名称',
+        area:['1000px','700px'],
+        end: function(){
+          window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
+        }
+      });
+      return false;
+    });
+
+    /* 监听添加一行权利名称 */
+    form.on('submit(addQlmc)', function(data){
+      if(ejhtml == null || ejhtml == ''){
+        ejhtml = $("#qlmc-sj").html();
+      }
+      $("#qlmc-sj").append(ejhtml);
+      form.render();
+      return false;
+    });
+
+    //删除5级按钮绑定
+    form.on('submit(deletePro)', function(data){
+      var id = $("#id").val();
+      layer.confirm('即将删除项目信息，是否确定删除？', {icon: 3, title:'提示'}, function(index){
+        $.ajax({
+          type: "POST",
+          url: "/hc/form/deletePro",
+          data:  {id:id},
+          dataType: "text",
+          success: function(rightId){
+            layer.alert('删除成功');
+            window.close();
+          }
+        });
+      });
+      return false;
+    });
+
+      var ur = window.location.href;
+      if(ur.indexOf('new') >= 0){
+          $("#deleteBut").hide();
+      }
+  });
+</script>
+</body>
+</html>

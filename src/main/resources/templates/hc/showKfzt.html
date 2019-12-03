@@ -1,0 +1,442 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>开发状态</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body style="height: 100%">
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-card-header">开发状态</div>
+      <div class="layui-card-body" style="padding: 15px;">
+
+<!--        <fieldset class="layui-elem-field">-->
+<!--          <legend>备案号信息请按以下格式填写</legend>-->
+<!--          <table class="layui-table" lay-size="lg">-->
+<!--              <tr>-->
+<!--                <td>电视剧</td>-->
+<!--                <td>□发行许可证：-->
+<!--                  制作单位：-->
+<!--                  剧名：-->
+<!--                  集数：-->
+<!--                  许可证编号：-->
+<!--                  发证日期：-->
+<!--                  □备案号：-->
+<!--                  备案号：</td>-->
+<!--              </tr>-->
+<!--            <tr>-->
+<!--              <td>电影</td>-->
+<!--              <td>公映许可证号：-->
+<!--                影片名称：-->
+<!--                出品单位：-->
+<!--                摄制单位：-->
+<!--                片长：-->
+<!--                声音制式：-->
+<!--                幕幅：-->
+<!--                发行范围：-->
+<!--                影片排次号：</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td>其他</td>-->
+<!--              <td>出版物备案号</td>-->
+<!--            </tr>-->
+<!--          </table>-->
+<!--        </fieldset>-->
+        <form class="layui-form" action="" lay-filter="component-form-group">
+          <input th:value="${pro.id}" name="proId" id="proId" type="hidden">
+          <input th:value="${pro.name}" name="proName" id="proName" type="hidden">
+
+          <div id="kzList" th:if="${kzList != null}" th:each="kz,kzStat : ${kzList}">
+            <input type="hidden" name="kzId" kzId="" th:value="${kz.id}">
+            <div class="layui-form-item">
+              <label class="layui-form-label">权利分类</label>
+              <div class="layui-input-block">
+                <select name="qlfl" qlfl=""  >
+                  <option th:each="lx,lxStat : ${qlfls}" th:value="${lx.value}" th:text="${lx.value}" th:if="${kz.qlfl== lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${qlfls}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${kz.qlfl== lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">类型</label>
+              <div class="layui-input-block">
+                <select name="lx" lx=""  >
+                  <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" th:if="${kz.lx== lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${kz.lx== lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">开发状态</label>
+              <div class="layui-input-block">
+                <select name="kfzt" kfzt=""  >
+                  <option th:each="lx,lxStat : ${kfzts}" th:value="${lx.value}" th:text="${lx.value}" th:if="${kz.kfzt== lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${kfzts}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${kz.kfzt== lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">素材是否归档</label>
+              <div class="layui-input-block">
+                <select name="sxgd" sxgd=""  >
+                  <option value="否" th:if="${kz.sxgd =='否'}" checked>否</option>
+                  <option value="否" th:if="${kz.sxgd !='否'}">否</option>
+                  <option value="是" th:if="${kz.sxgd =='是'}" checked>是</option>
+                  <option value="是" th:if="${kz.sxgd !='是'}" >是</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">著作权所属公司</label>
+                <div class="layui-input-block" >
+                    <input type="text" name="ssgs"  class="layui-input" ssgs="" th:value="${kz.ssgs}">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+              <label class="layui-form-label">产生时间</label>
+              <div class="layui-input-inline">
+                <input type="text" name="beginDate"   beginDate="" th:value="${kz.beginDate}"   autocomplete="off" class="layui-input test-item" >
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">到期时间</label>
+              <div class="layui-input-inline">
+                <input type="text" name="endDate"  endDate="" th:value="${kz.endDate}"    autocomplete="off" class="layui-input test-item" >
+              </div>
+            </div>
+            <div class="layui-inline">
+              <div class="layui-input-inline">
+                <input type="checkbox" name="sex" jsyj="" value="永久" title="永久">
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">负责人</label>
+              <div class="layui-input-block" >
+                <input type="text" name="fzr"  class="layui-input" fzr="" th:value="${kz.fzr}">
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">备案号信息</label>
+              <div class="layui-input-block">
+                  <textarea  name="baxx"  class="layui-textarea" baxx="" th:utext= "${kz.baxx}" ></textarea>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">备注</label>
+              <div class="layui-input-block">
+                <input type="text" name="bz"  class="layui-input" bz="" th:value="${kz.bz}">
+              </div>
+            </div>
+
+
+            <button  th:id="${kz.id}"  class="layui-btn layui-btn-normal layui-bg-red" lay-filter="deleteKz" lay-submit>
+              <i class="layui-icon">&#xe608;</i>
+              删除
+            </button>
+            <hr class="layui-bg-blue">
+          </div>
+
+
+
+
+
+          <div id="kz" >
+            <input type="hidden" name="kzId" kzId="" >
+            <div class="layui-form-item">
+              <label class="layui-form-label">权利分类</label>
+              <div class="layui-input-block">
+                <select name="qlfl" qlfl=""  >
+                  <option value=""></option>
+                  <option th:each="lx,lxStat : ${qlfls}" th:value="${lx.value}" th:text="${lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">类型</label>
+              <div class="layui-input-block">
+                <select name="lx" lx="" >
+                  <option value=""></option>
+                  <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" ></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">开发状态</label>
+              <div class="layui-input-block">
+                <select name="kfzt" kfzt=""  >
+                  <option value=""></option>
+                  <option th:each="lx,lxStat : ${kfzts}" th:value="${lx.value}" th:text="${lx.value}"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">素材是否归档</label>
+              <div class="layui-input-block">
+                <select name="sxgd" sxgd=""  >
+                  <option value="否" >否</option>
+                  <option value="是" >是</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">著作权所属公司</label>
+              <div class="layui-input-block" >
+                <input type="text" name="ssgs"  class="layui-input" ssgs="" >
+              </div>
+            </div>
+
+            <div class="layui-inline">
+              <label class="layui-form-label">产生时间</label>
+              <div class="layui-input-inline">
+                <input type="text" name="beginDate"   beginDate=""    autocomplete="off" class="layui-input test-item" >
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">到期时间</label>
+              <div class="layui-input-inline">
+                <input type="text" name="endDate"  endDate=""    autocomplete="off" class="layui-input test-item" >
+              </div>
+            </div>
+
+            <div class="layui-inline">
+              <div class="layui-input-inline">
+                <input type="checkbox" name="sex" jsyj="" value="永久" title="永久">
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">负责人</label>
+              <div class="layui-input-block" >
+                <input type="text" name="fzr"  class="layui-input" fzr="" >
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">备案号信息</label>
+              <div class="layui-input-block">
+                  <textarea  name="baxx" rows = "8"  class="layui-textarea" baxx="" >
+制作单位：
+剧名：
+集数：
+许可证编号：
+发证日期：
+上线号：
+备案号：
+                  </textarea>
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">备注</label>
+              <div class="layui-input-block">
+                <input type="text" name="title"  class="layui-input" bz="" >
+              </div>
+            </div>
+            <hr class="layui-bg-blue">
+          </div>
+          <div class="layui-form-item">
+            <button class="layui-btn" lay-filter="addKz" lay-submit>
+              <i class="layui-icon">&#xe608;</i> 添加开发状态
+            </button>
+          </div>
+      <div class="layui-form-item layui-layout-admin">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">立即提交</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    
+  <script src="/static/layuiadmin/layui/layui.js"></script>
+  <script>
+    var ejhtml;
+    var dyhtml;
+    var pro_yjql ="";
+    var pro_ejql
+  layui.config({
+    base: '/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'laydate','jquery'], function(){
+    var $ = layui.$
+    ,admin = layui.admin
+    ,element = layui.element
+    ,layer = layui.layer
+    ,laydate = layui.laydate
+    ,form = layui.form
+    ,$=layui.$;
+    form.render(null, 'component-form-group');
+
+
+    //删除按钮绑定
+    form.on('submit(deleteKz)', function(data){
+      var id = $(this).attr("id");
+      layer.confirm('是否确定删除？', {icon: 3, title:'提示'}, function(index){
+        layer.confirm()
+        $.ajax({
+          type: "POST",
+          url: "/hc/kfzt/deleteKz",
+          data:  {id:id},
+          dataType: "text",
+          success: function(rightId){
+            layer.alert('删除成功');
+            window.location.reload();
+          }
+        });
+      });
+      return false;
+    });
+    
+    /* 监听提交 */
+    form.on('submit(component-form-demo1)', function(data){
+      var match = /^(\d{4})-(\d{2})-(\d{2})$/;
+      var match1 = /^(\d{4})-(\d{2})$/;
+      var match2 = /^(\d{4})$/;
+      var flag1 = false;
+      $("[beginDate]").each(function (i){
+        if($(this).val()!= null && $(this).val() != ''){
+          if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
+            flag1 = true;
+          }
+        }
+      });
+      $("[endDate]").each(function (i){
+        if($(this).val()!= null && $(this).val() != ''){
+          if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
+            flag1 = true;
+          }
+        }
+      });
+      if(flag1){
+        layer.alert("日期格式不正确，正确的格式为：YYYY-mm-DD或YYYY-mm或YYYY");
+        return false;
+      }
+      var kzs = getKz();
+      $.ajax({
+        type: "POST",
+        url: "/hc/kfzt/saveKz",
+        data:  {jsonStr:kzs},
+        dataType: "text",
+        success: function(rightId){
+          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+          parent.layer.close(index); //再执行关闭
+          parent.location.reload();
+        }
+      });
+      return false;
+    });
+
+
+    /* 监听添加一行类型 */
+    form.on('submit(addKz)', function(data){
+      if(dyhtml == null || dyhtml == ''){
+        dyhtml = $("#kz").html();
+      }
+      $("#kz").append("<hr class=\"layui-bg-blue\">");
+      $("#kz").append(dyhtml);
+      form.render();
+      return false;
+    });
+
+
+    function getKz() {
+      var data=[];
+      var ids = [];
+      $("[kzId]").each(function (i){
+        ids.push($(this).val());
+      });
+      var lxs = [];
+      $("[lx]").each(function (i){
+        lxs.push($(this).val());
+      });
+      var qlfls = [];
+      $("[qlfl]").each(function (i){
+        qlfls.push($(this).val());
+      });
+        var kfzts = [];
+        $("[kfzt]").each(function (i){
+          kfzts.push($(this).val());
+        });
+      var ssgss = [];
+      $("[ssgs]").each(function (i){
+        ssgss.push($(this).val());
+      });
+      var beginDates = [];
+      $("[beginDate]").each(function (i){
+        beginDates.push($(this).val());
+      });
+      var endDates = [];
+      $("[endDate]").each(function (i){
+        endDates.push($(this).val());
+      });
+      var bzs = [];
+      $("[bz]").each(function (i){
+        bzs.push($(this).val());
+      });
+      var fzrs = [];
+      $("[fzr]").each(function (i){
+        fzrs.push($(this).val());
+      });
+      var sxgds = [];
+      $("[sxgd]").each(function (i){
+        sxgds.push($(this).val());
+      });
+      var baxxs = [];
+      $("[baxx]").each(function (i){
+        // baxxs.push($(this).text());
+      });
+      var baxxList = document.getElementsByName("baxx");
+      for(var i=0;i<baxxList.length;i++){
+        baxxs.push(baxxList[i].value);
+      }
+
+      var proId = $("#proId").val();
+      var proName = $("#proName").val();
+      for(var i = 0; i < $("[lx]").length ; i++){
+        var kz = {
+          id: ids[i],
+          lx:lxs[i],
+          qlfl : qlfls[i],
+          kfzt:kfzts[i],
+          ssgs :ssgss[i],
+          beginDate : beginDates[i],
+          endDate : endDates[i],
+          bz : bzs[i],
+          proId : proId,
+          proName : proName,
+          fzr : fzrs[i],
+          sxgd : sxgds[i],
+          baxx : baxxs[i]
+      }
+        data.push(kz);
+      }
+      return JSON.stringify(data);
+    }
+  });
+  </script>
+</body>
+</html>
