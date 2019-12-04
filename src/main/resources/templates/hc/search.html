@@ -33,13 +33,13 @@
               </div>
             </div>
 
-            <div class="layui-inline">
+            <div class="layui-inline" th:if="${session.user.access == '1'}">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="addBq">录入版权</button>
               </div>
             </div>
 
-            <div class="layui-inline">
+            <div class="layui-inline" th:if="${session.user.access == '1'}">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="addFx">录入发行</button>
               </div>

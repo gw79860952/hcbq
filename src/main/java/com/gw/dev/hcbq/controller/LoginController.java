@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -25,10 +26,10 @@ public class LoginController {
 
     @RequestMapping("login")
     @ResponseBody
-    public Object login(String account,String password){
+    public Object login(HttpServletRequest request,String account, String password){
         List<User> uList = this.userService.findByAccountAndPassword(account,password);
         if(uList.size() > 0){
-
+            request.getSession().setAttribute("user",uList.get(0));
             return new ResultVO("success",1L);
         }else{
             return new ResultVO("false",1L);

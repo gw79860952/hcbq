@@ -16,10 +16,10 @@
     <div class="layui-card">
       <div class="layui-card-header">版权信息详情</div>
       <div class="layui-card-body" style="padding: 15px;">
-        <button type="button" class="layui-btn" lay-filter="addKfzt" lay-submit>
+        <button type="button" class="layui-btn" lay-filter="addKfzt" lay-submit th:if="${session.user.access == '1' or session.user.access == '2'}">
           添加开发状态
         </button>
-        <button type="button" class="layui-btn" lay-filter="edit" lay-submit>
+        <button type="button" class="layui-btn" lay-filter="edit" lay-submit th:if="${session.user.access == '1'}">
           编辑版权信息
         </button>
         <br/>

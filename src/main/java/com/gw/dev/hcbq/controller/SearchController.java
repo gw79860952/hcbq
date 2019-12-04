@@ -55,6 +55,7 @@ public class SearchController {
 
     @RequestMapping("index")
     public String index(Model model, HttpServletRequest request){
+
         List<DictionaryValue> lxs = this.dicService.findByDicCode("lx");
         model.addAttribute("lxs",lxs);
 
