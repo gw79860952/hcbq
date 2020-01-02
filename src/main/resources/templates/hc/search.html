@@ -301,23 +301,24 @@
       ,cols: [[ //表头
          {field: 'proId', title: 'id',fixed: 'left',hide:true}
         ,{field: 'formType', title: 'formType',fixed: 'left',hide:true}
-        ,{field: 'proName', title: '项目名称', width:180,fixed: 'left'}
-        ,{field: 'oldName', title: '曾用名', width:180,fixed: 'left'}
-        ,{field: 'projectType', title: '类型', width:80,fixed: 'left'}
-        ,{field: 'yjName', title: '一级权利', width:140}
-        ,{field: 'ejName', title: '二级权利', width:140}
-        ,{field: 'dy', title: '地域', width:80}
-        ,{field: 'dyxf', title: '地域细分', width:80}
-        ,{field: 'startDate', title: '权利开始时间', width:80}
-        ,{field: 'endDate', title: '权利结束时间', width:80}
-        ,{field: 'ssgs', title: '著作权所属公司', width:180}
-        ,{field: 'bz', title: '备注', width:280}
+        ,{field: 'proName', title: '项目名称', width:180,fixed: 'left',sort:true}
+        ,{field: 'oldName', title: '曾用名', width:180,fixed: 'left',sort:true}
+        ,{field: 'projectType', title: '类型', width:80,fixed: 'left',sort:true}
+        ,{field: 'yjName', title: '一级权利', width:140,sort:true}
+        ,{field: 'ejName', title: '二级权利', width:140,sort:true}
+        ,{field: 'dy', title: '地域', width:80,sort:true}
+        ,{field: 'dyxf', title: '地域细分', width:80,sort:true}
+        ,{field: 'startDate', title: '权利开始时间', width:80,sort:true}
+        ,{field: 'endDate', title: '权利结束时间', width:80,sort:true}
+        ,{field: 'ssgs', title: '著作权所属公司', width:180,sort:true}
+        ,{field: 'bz', title: '备注', width:280,sort:true}
       ]]
       ,loading: true
       ,size : 'lg'
       ,where : {first:'1'}
       ,toolbar: true
       ,defaultToolbar: ['filter', 'exports']
+      ,autoSort :true
     });
 
     //监听行单击事件

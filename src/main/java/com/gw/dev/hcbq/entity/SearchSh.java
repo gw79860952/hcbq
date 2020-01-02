@@ -8,8 +8,8 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "searchview1")
-public class Search {
+@Table(name = "searchview2")
+public class SearchSh {
 
     private String proId;
     private String proName;
@@ -51,11 +51,13 @@ public class Search {
     private String htmc;
     private String htbh;
     private String xkz;
-
+    private String ash;
+    private String bsh;
+    private String csh;
 
     @Override
     public String toString() {
-        return "Search{" +
+        return "SearchSh{" +
                 "proId='" + proId + '\'' +
                 ", proName='" + proName + '\'' +
                 ", oldName='" + oldName + '\'' +
@@ -91,7 +93,34 @@ public class Search {
                 ", htmc='" + htmc + '\'' +
                 ", htbh='" + htbh + '\'' +
                 ", xkz='" + xkz + '\'' +
+                ", ash='" + ash + '\'' +
+                ", bsh='" + bsh + '\'' +
+                ", csh='" + csh + '\'' +
                 '}';
+    }
+
+    public String getAsh() {
+        return ash;
+    }
+
+    public void setAsh(String ash) {
+        this.ash = ash;
+    }
+
+    public String getBsh() {
+        return bsh;
+    }
+
+    public void setBsh(String bsh) {
+        this.bsh = bsh;
+    }
+
+    public String getCsh() {
+        return csh;
+    }
+
+    public void setCsh(String csh) {
+        this.csh = csh;
     }
 
     public String getProId() {

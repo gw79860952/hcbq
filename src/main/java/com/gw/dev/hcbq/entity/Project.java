@@ -18,6 +18,7 @@ public class Project {
     private String projectType;
     private String glProId;
     private String glProName;
+    private String shStatus;
 
     @Override
     public String toString() {
@@ -29,7 +30,16 @@ public class Project {
                 ", projectType='" + projectType + '\'' +
                 ", glProId='" + glProId + '\'' +
                 ", glProName='" + glProName + '\'' +
+                ", shStatus='" + shStatus + '\'' +
                 '}';
+    }
+
+    public String getShStatus() {
+        return shStatus;
+    }
+
+    public void setShStatus(String shStatus) {
+        this.shStatus = shStatus;
     }
 
     public String getGlProId() {

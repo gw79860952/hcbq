@@ -18,7 +18,31 @@ public class ProjectRight {
     private String projectType;
     //原始、卖出、现有标志
     private String haveType;
+    private String shStatus;
 
+    @Override
+    public String toString() {
+        return "ProjectRight{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", yjName='" + yjName + '\'' +
+                ", ejName='" + ejName + '\'' +
+                ", xzms='" + xzms + '\'' +
+                ", zrxzms='" + zrxzms + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", projectType='" + projectType + '\'' +
+                ", haveType='" + haveType + '\'' +
+                ", shStatus='" + shStatus + '\'' +
+                '}';
+    }
+
+    public String getShStatus() {
+        return shStatus;
+    }
+
+    public void setShStatus(String shStatus) {
+        this.shStatus = shStatus;
+    }
 
     public String getHaveType() {
         return haveType;
@@ -82,21 +106,6 @@ public class ProjectRight {
 
     public void setZrxzms(String zrxzms) {
         this.zrxzms = zrxzms;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectRight{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", yjName='" + yjName + '\'' +
-                ", ejName='" + ejName + '\'' +
-                ", xzms='" + xzms + '\'' +
-                ", zrxzms='" + zrxzms + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", projectType='" + projectType + '\'' +
-                ", haveType='" + haveType + '\'' +
-                '}';
     }
 
     public String getProjectType() {

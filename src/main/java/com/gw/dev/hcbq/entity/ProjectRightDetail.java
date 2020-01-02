@@ -37,6 +37,7 @@ public class ProjectRightDetail {
     private String xkz;
     private String projectRightId;
     private String projectId;
+    private String shStatus;
 
     @Override
     public String toString() {
@@ -64,9 +65,17 @@ public class ProjectRightDetail {
                 ", xkz='" + xkz + '\'' +
                 ", projectRightId='" + projectRightId + '\'' +
                 ", projectId='" + projectId + '\'' +
+                ", shStatus='" + shStatus + '\'' +
                 '}';
     }
 
+    public String getShStatus() {
+        return shStatus;
+    }
+
+    public void setShStatus(String shStatus) {
+        this.shStatus = shStatus;
+    }
 
 
     public String getKsdd() {
