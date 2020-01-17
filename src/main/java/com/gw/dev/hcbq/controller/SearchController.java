@@ -35,7 +35,9 @@ public class SearchController {
         System.out.println("first:"+f);
         System.out.println(dto.toString());
         dto.setFormType("bq");
-
+        dto.setAsh("1");
+        dto.setBsh("1");
+        dto.setCsh("1");
         if("1".equals(f) || (dto.getQljsks() == null && dto.getQljsjs() == null)){
             //3是仅供首次访问首页时初始化使用的特殊查询项，按要求，结束时间和权利类型不填的话 也默认给这些条件
             dto.setYj("3");
@@ -49,6 +51,15 @@ public class SearchController {
         if(dto.getHaveType() != null && "all".equals(dto.getHaveType())){
             dto.setHaveType(null);
         }
+        Page<Search> res =  this.searchService.findPageByCondition(dto);
+        return new ResultVO(res.getContent(),res.getTotalElements());
+    }
+
+    @ResponseBody
+    @RequestMapping("searchSh")
+    public Object searchSh(Model model, HttpServletRequest request, SearchDto dto){
+        dto.setFormType("bq");
+        dto.setAsh("sh");
         Page<Search> res =  this.searchService.findPageByCondition(dto);
         return new ResultVO(res.getContent(),res.getTotalElements());
     }
@@ -68,14 +79,31 @@ public class SearchController {
         List<DictionaryValue> qlfxejs = this.dicService.findByDicCode("qlfxej");
         model.addAttribute("qlfxejs",qlfxejs);
 
+
         List<DictionaryValue> dys = this.dicService.findByDicCode("dy");
         model.addAttribute("dys",dys);
 
-//        List<DictionaryValue> bqHaveTypes = this.dicService.findByDicCode("bqHaveTypes");
-//        model.addAttribute("bqHaveTypes",bqHaveTypes);
-//
-//        List<DictionaryValue> fxHaveTypes = this.dicService.findByDicCode("fxHaveTypes");
-//        model.addAttribute("fxHaveTypes",fxHaveTypes);
         return "hc/search";
+    }
+
+    @RequestMapping("indexSh")
+    public String indexSh(Model model, HttpServletRequest request){
+
+        List<DictionaryValue> lxs = this.dicService.findByDicCode("lx");
+        model.addAttribute("lxs",lxs);
+
+        List<DictionaryValue> qlmcs = this.dicService.findByDicCode("qlmc");
+        model.addAttribute("qlmcs",qlmcs);
+
+        List<DictionaryValue> qlfxyjs = this.dicService.findByDicCode("qlfxyj");
+        model.addAttribute("qlfxyjs",qlfxyjs);
+
+        List<DictionaryValue> qlfxejs = this.dicService.findByDicCode("qlfxej");
+        model.addAttribute("qlfxejs",qlfxejs);
+
+        List<DictionaryValue> dys = this.dicService.findByDicCode("dy");
+        model.addAttribute("dys",dys);
+
+        return "hc/searchSh";
     }
 }

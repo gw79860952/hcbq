@@ -47,9 +47,4 @@ FROM
 CREATE VIEW `hcbq`.`searchview1` AS
 select *
 from
-searchview where ash='1' and bsh='1' and  detailId in(select max(detailId) from searchview group by proName,oldName,haveType,projectType,yjName,ejName);
-
-CREATE VIEW `hcbq`.`searchview2` AS
-select *
-from
 searchview where detailId in(select max(detailId) from searchview group by proName,oldName,haveType,projectType,yjName,ejName);

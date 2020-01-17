@@ -513,47 +513,49 @@
     
     /* 监听提交 */
     form.on('submit(component-form-demo1)', function(data){
-      var match = /^(\d{4})-(\d{2})-(\d{2})$/;
-      var match1 = /^(\d{4})-(\d{2})$/;
-      var match2 = /^(\d{4})$/;
-      var flag1 = false;
-      $("[startDate]").each(function (i){
-        if($(this).val()!= null && $(this).val() != ''){
-          if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
-            flag1 = true;
-          }
-        }
-      });
-      $("[endDate]").each(function (i){
-        if($(this).val()!= null && $(this).val() != ''){
-          if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
-            flag1 = true;
-          }
-        }
-      });
-      if(flag1){
-        layer.alert("日期格式不正确，正确的格式为：YYYY-mm-DD或YYYY-mm或YYYY");
-        return false;
-      }
-      var qlxf = getQlxfStr();
-      $.ajax({
-        type: "POST",
-        url: "/hc/form/saveQlxf",
-        data:  qlxf,
-        dataType: "text",
-        success: function(rightId){
-          var dyStr = getDy();
-          $.ajax({
-            type: "POST",
-            url: "/hc/form/saveDy",
-            data:  {jsonStr:dyStr},
-            dataType: "text",
-            success: function(rightId){
-              var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-              parent.layer.close(index); //再执行关闭
+      layer.confirm('提交后将该项目信息将进入审核，是否确认提交？若无须审核请点击取消。', {icon: 3, title:'提示'}, function(index){
+        var match = /^(\d{4})-(\d{2})-(\d{2})$/;
+        var match1 = /^(\d{4})-(\d{2})$/;
+        var match2 = /^(\d{4})$/;
+        var flag1 = false;
+        $("[startDate]").each(function (i){
+          if($(this).val()!= null && $(this).val() != ''){
+            if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
+              flag1 = true;
             }
-          });
+          }
+        });
+        $("[endDate]").each(function (i){
+          if($(this).val()!= null && $(this).val() != ''){
+            if(!match.test($(this).val()) && !match1.test($(this).val()) && !match2.test($(this).val())){
+              flag1 = true;
+            }
+          }
+        });
+        if(flag1){
+          layer.alert("日期格式不正确，正确的格式为：YYYY-mm-DD或YYYY-mm或YYYY");
+          return false;
         }
+        var qlxf = getQlxfStr();
+        $.ajax({
+          type: "POST",
+          url: "/hc/form/saveQlxf",
+          data:  qlxf,
+          dataType: "text",
+          success: function(rightId){
+            var dyStr = getDy();
+            $.ajax({
+              type: "POST",
+              url: "/hc/form/saveDy",
+              data:  {jsonStr:dyStr},
+              dataType: "text",
+              success: function(rightId){
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                parent.layer.close(index); //再执行关闭
+              }
+            });
+          }
+        });
       });
       return false;
     });

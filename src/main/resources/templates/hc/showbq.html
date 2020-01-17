@@ -148,15 +148,18 @@
     
     /* 监听提交 */
     form.on('submit(component-form-demo1)', function(data){
-      $.ajax({
-        type: "POST",
-        url: "/hc/form/saveShow",
-        data:  data.field,
-        dataType: "text",
-        success: function(res){
-          window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
-        }
+      layer.confirm('提交后将该项目信息将进入审核，是否确认提交？若无须审核请点击取消。', {icon: 3, title:'提示'}, function(index){
+        $.ajax({
+          type: "POST",
+          url: "/hc/form/saveShow",
+          data:  data.field,
+          dataType: "text",
+          success: function(res){
+            window.location.href="/hc/form/show/"+ $("#id").val()+"/"+$("#formType").val();
+          }
+        });
       });
+
       return false;
     });
 

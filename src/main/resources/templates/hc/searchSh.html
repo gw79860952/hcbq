@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>版权首页</title>
+  <title>版权首页(待审核)</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -30,24 +30,6 @@
               <label class="layui-form-label">关联项目</label>
               <div class="layui-input-inline" style="width: 100px;">
                 <input type="text" name="glProName"  id="glProName" class="layui-input">
-              </div>
-            </div>
-
-            <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
-              <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="addBq">录入版权</button>
-              </div>
-            </div>
-
-            <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
-              <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="addFx">录入发行</button>
-              </div>
-            </div>
-
-            <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
-              <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="shBq">录入审核</button>
               </div>
             </div>
 
@@ -288,7 +270,7 @@
       data.field.ejName = ejName;
       data.field.first = '2';
       table.reload('view', {
-        url: '/hc/search/search'
+        url: '/hc/search/searchSh'
         ,where: data.field //设定异步数据接口的额外参数
         ,page: {
                   curr: 1 //重新从第 1 页开始
@@ -302,7 +284,7 @@
     table.render({
       elem: '#view'
       ,height: 600
-      ,url: '/hc/search/search/' //数据接口
+      ,url: '/hc/search/searchSh/' //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
          {field: 'proId', title: 'id',fixed: 'left',hide:true}
@@ -329,26 +311,9 @@
 
     //监听行单击事件
     table.on('row(view)', function(obj){
-      window.open('/hc/show/showOne/'+ obj.data.formType + '/' + obj.data.proId+'/0');
+      window.open('/hc/show/showOne/'+ obj.data.formType + '/' + obj.data.proId+'/1');
     });
 
-    //监听新增版权
-    form.on('submit(addBq)', function(data){
-      window.open('/hc/form/show/new/bq');
-      return false;
-    });
-
-    //监听新增版权
-    form.on('submit(shBq)', function(data){
-      window.open('/hc/search/indexSh');
-      return false;
-    });
-
-    //监听新增发行
-    form.on('submit(addFx)', function(data){
-      window.open('/hc/form/show/new/fx');
-      return false;
-    });
 
   });
   </script>

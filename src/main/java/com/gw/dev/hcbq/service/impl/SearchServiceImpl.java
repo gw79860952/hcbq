@@ -115,6 +115,26 @@ public class SearchServiceImpl implements SearchService {
                     Predicate predicate = cb.like(root.get("htbh").as(String.class),"%" + dto.getHtbh() + "%");
                     predicates.add(predicate);
                 }
+                if(StringUtil.isNotBlank(dto.getAsh())){
+                    if( "sh".equals(dto.getAsh())){
+                        Predicate predicate = cb.or(cb.equal(root.get("ash").as(String.class), "0"),
+                                cb.equal(root.get("bsh").as(String.class), "0"),
+                                cb.equal(root.get("csh").as(String.class), "0"));
+                        predicates.add(predicate);
+                    }else{
+                        Predicate predicate = cb.equal(root.get("ash").as(String.class), dto.getAsh());
+                        predicates.add(predicate);
+                    }
+                }
+                if(StringUtil.isNotBlank(dto.getBsh())){
+                    Predicate predicate = cb.equal(root.get("bsh").as(String.class),  dto.getBsh());
+                    predicates.add(predicate);
+                }
+                if(StringUtil.isNotBlank(dto.getCsh())){
+                    Predicate predicate = cb.equal(root.get("csh").as(String.class),  dto.getCsh());
+                    predicates.add(predicate);
+                }
+
                 if ("1".equals(dto.getJsdd())) {
                     Predicate predicate = cb.equal(root.get("jsdd").as(String.class), "1");
                     predicates.add(predicate);

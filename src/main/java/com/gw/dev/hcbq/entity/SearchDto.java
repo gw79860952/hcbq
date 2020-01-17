@@ -75,6 +75,9 @@ public class SearchDto {
     @JSONField(format = "yyyy-MM-dd")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date qljsjs;
+    private String ash;
+    private String bsh;
+    private String csh;
 
     @Override
     public String toString() {
@@ -106,6 +109,7 @@ public class SearchDto {
                 ", endDateS=" + endDateS +
                 ", ksdd='" + ksdd + '\'' +
                 ", jsdd='" + jsdd + '\'' +
+                ", yj='" + yj + '\'' +
                 ", qlms='" + qlms + '\'' +
                 ", ssgs='" + ssgs + '\'' +
                 ", sqf='" + sqf + '\'' +
@@ -120,7 +124,34 @@ public class SearchDto {
                 ", qlksjs=" + qlksjs +
                 ", qljsks=" + qljsks +
                 ", qljsjs=" + qljsjs +
+                ", ash='" + ash + '\'' +
+                ", bsh='" + bsh + '\'' +
+                ", csh='" + csh + '\'' +
                 '}';
+    }
+
+    public String getAsh() {
+        return ash;
+    }
+
+    public void setAsh(String ash) {
+        this.ash = ash;
+    }
+
+    public String getBsh() {
+        return bsh;
+    }
+
+    public void setBsh(String bsh) {
+        this.bsh = bsh;
+    }
+
+    public String getCsh() {
+        return csh;
+    }
+
+    public void setCsh(String csh) {
+        this.csh = csh;
     }
 
     public Date getQlksks() {

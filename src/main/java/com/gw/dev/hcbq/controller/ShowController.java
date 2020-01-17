@@ -33,8 +33,9 @@ public class ShowController {
     @Resource
     ProKfztService proKfztService;
 
-    @RequestMapping("showOne/{type}/{id}")
-    public String showOne(Model model, HttpServletRequest request, @PathVariable("id") String id, @PathVariable("type") String type){
+    @RequestMapping("showOne/{type}/{id}/{sh}")
+    public String showOne(Model model, HttpServletRequest request, @PathVariable("id") String id, @PathVariable("type") String type
+    , @PathVariable("sh") String sh){
         //第一级
         Project pro = this.projectService.getOne(id);
 
@@ -92,7 +93,12 @@ public class ShowController {
         if("fx".equals(type)){
             return "hc/showOnefx";
         }else{
-            return "hc/showOnebq";
+            if("1".equals(sh)){
+                return "hc/showOnebqSh";
+            }else{
+                return "hc/showOnebq";
+            }
+
         }
     }
 
@@ -101,5 +107,26 @@ public class ShowController {
         //第一级
         Project pro = this.projectService.getOne(id);
         return "hc/showKfzt";
+    }
+
+    @RequestMapping("sh")
+    @ResponseBody
+    public String sh(String id){
+        Project p = this.projectService.getOne(id);
+        p.setShStatus("1");
+        this.projectService.save(p);
+
+        List<ProjectRight> prList = this.projectRightService.findByProjectId(id);
+        for (ProjectRight pr : prList){
+            pr.setShStatus("1");
+            this.projectRightService.save(pr);
+        }
+
+        List<ProjectRightDetail> prdList = this.projectRightDetailService.findByProjectId(id);
+        for(ProjectRightDetail prd : prdList){
+            prd.setShStatus("1");
+            this.projectRightDetailService.save(prd);
+        }
+        return "success";
     }
 }

@@ -16,8 +16,8 @@
     <div class="layui-card">
       <div class="layui-card-header">版权信息详情</div>
       <div class="layui-card-body" style="padding: 15px;">
-        <button type="button" class="layui-btn" lay-filter="addKfzt" lay-submit th:if="${session.user.access == '1' or session.user.access == '2'}">
-          添加开发状态
+        <button type="button" class="layui-btn" lay-filter="addKfzt" lay-submit th:if="${session.user.access == '1'}">
+          审核通过
         </button>
         <button type="button" class="layui-btn" lay-filter="edit" lay-submit th:if="${session.user.access == '1' or session.user.access == '2'}">
           编辑版权信息
@@ -57,7 +57,8 @@
           </tr>
           </tbody>
         </table>
-        项目信息
+        <span th:if="${pro.project.shStatus == '1'}">项目信息</span>
+        <span th:if="${pro.project.shStatus == '0'}" style="color: red">项目信息</span>
         <hr class="layui-bg-orange">
         <table class="layui-table" lay-size="lg">
           <colgroup>
@@ -95,7 +96,8 @@
 
               <div class="layui-collapse">
                 <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.xyprojectRightDtoList}">
-                  <h2 class="layui-colla-title" th:text="${ proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" style="color: red" th:if="${pro.project.shStatus == '0'}" th:text="${ proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" th:if="${pro.project.shStatus == '1'}" th:text="${ proRight.projectRight.projectType }"></h2>
                   <div class="layui-colla-content ">
 
                     <table class="layui-table" >
@@ -132,7 +134,9 @@
                       </colgroup>
                       <tbody>
                       <tr>
-                        <td style="width: 12%" class="layui-bg-gray">地域</td>
+
+                        <td style="width: 12%" class="layui-bg-gray" th:if="${proRightDetail.shStatus == '1'}">地域</td>
+                        <td style="width: 12%" class="layui-bg-red"  th:if="${proRightDetail.shStatus == '0'}">地域</td>
                         <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
                         <td style="width: 12%" class="layui-bg-gray">地域国家</td>
                         <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
@@ -181,7 +185,8 @@
               <div class="layui-collapse">
 
                 <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.ysprojectRightDtoList}">
-                  <h2 class="layui-colla-title" th:text="${proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" style="color: red" th:if="${pro.project.shStatus == '0'}" th:text="${ proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" th:if="${pro.project.shStatus == '1'}" th:text="${ proRight.projectRight.projectType }"></h2>
                   <div class="layui-colla-content ">
 
                     <table class="layui-table" >
@@ -222,7 +227,8 @@
                       </colgroup>
                       <tbody>
                       <tr>
-                        <td style="width: 12%" class="layui-bg-gray">地域</td>
+                        <td style="width: 12%" class="layui-bg-gray" th:if="${proRightDetail.shStatus == '1'}">地域</td>
+                        <td style="width: 12%;color: red" class="layui-bg-gray"  th:if="${proRightDetail.shStatus == '0'}">地域</td>
                         <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
                         <td style="width: 12%" class="layui-bg-gray">地域国家</td>
                         <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
@@ -275,7 +281,8 @@
               <div class="layui-collapse">
 
                 <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.zsqprojectRightDtoList}">
-                  <h2 class="layui-colla-title" th:text="${proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" style="color: red" th:if="${pro.project.shStatus == '0'}" th:text="${ proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" th:if="${pro.project.shStatus == '1'}" th:text="${ proRight.projectRight.projectType }"></h2>
                   <div class="layui-colla-content ">
 
                     <table class="layui-table" >
@@ -316,7 +323,8 @@
                       </colgroup>
                       <tbody>
                       <tr>
-                        <td style="width: 12%" class="layui-bg-gray">地域</td>
+                        <td style="width: 12%" class="layui-bg-gray" th:if="${proRightDetail.shStatus == '1'}">地域</td>
+                        <td style="width: 12%;color: red" class="layui-bg-gray"  th:if="${proRightDetail.shStatus == '0'}">地域</td>
                         <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
                         <td style="width: 12%" class="layui-bg-gray">地域国家</td>
                         <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
@@ -370,7 +378,8 @@
               <div class="layui-collapse">
 
                 <div class="layui-colla-item" th:each="proRight,proRightS : ${pro.qlywzrprojectRightDtoList}">
-                  <h2 class="layui-colla-title" th:text="${proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" style="color: red" th:if="${pro.project.shStatus == '0'}" th:text="${ proRight.projectRight.projectType }"></h2>
+                  <h2 class="layui-colla-title" th:if="${pro.project.shStatus == '1'}" th:text="${ proRight.projectRight.projectType }"></h2>
                   <div class="layui-colla-content ">
 
                     <table class="layui-table" >
@@ -411,7 +420,8 @@
                       </colgroup>
                       <tbody>
                       <tr>
-                        <td style="width: 12%" class="layui-bg-gray">地域</td>
+                        <td style="width: 12%" class="layui-bg-gray" th:if="${proRightDetail.shStatus == '1'}">地域</td>
+                        <td style="width: 12%;color: red" class="layui-bg-gray"  th:if="${proRightDetail.shStatus == '0'}">地域</td>
                         <td style="width: 20%" th:text="${proRightDetail.dy}"></td>
                         <td style="width: 12%" class="layui-bg-gray">地域国家</td>
                         <td style="width: 20%" th:text="${proRightDetail.dygj}"></td>
@@ -488,12 +498,19 @@
     });
 
     form.on('submit(addKfzt)', function(data){
-      //首先保存一级数据
-      layer.open({
-        type: 2,
-        content: '/hc/kfzt/show/'+$("#id").val(),
-        title:'开发状态',
-        area:['1000px','700px']
+      var id = $("#id").val();
+      layer.confirm('确认审核通过？', {icon: 3, title:'提示',offset: '250px'}, function(index){
+        $.ajax({
+          type: "POST",
+          url: "/hc/show/sh",
+          data:  {id:id},
+          dataType: "text",
+          success: function(rightId){
+            layer.alert('审核成功');
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+          }
+        });
       });
       return false;
     });
@@ -509,9 +526,6 @@
       window.open('/hc/show/showOne/bq/' + id);
       return false;
     });
-
-
-
   });
   </script>
 </body>

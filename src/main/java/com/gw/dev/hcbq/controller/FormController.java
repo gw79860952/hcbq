@@ -298,6 +298,18 @@ public class FormController {
                 pro.setGlProName(p.getName());
             }
         }
+//        Project proj = null;
+//        try {
+//            proj = projectService.getOne(pro.getId());
+//            if(proj != null){
+//                if(!proj.getName().equals(pro.getName()) || !proj.getOldName().equals(pro.getOldName())){
+//                    pro.setShStatus("0");
+//                }
+//            }
+//        }catch (EntityNotFoundException e){
+//            pro.setShStatus("0");
+//        }
+
         this.projectService.save(pro);
         return "success";
     }
@@ -328,7 +340,13 @@ public class FormController {
         if(projectRight.getEjName() != null && projectRight.getEjName().endsWith(",")){
             projectRight.setEjName(projectRight.getEjName().substring(0,projectRight.getEjName().length()-1));
         }
+        projectRight.setShStatus("0");
         ProjectRight pr = this.projectRightService.save(projectRight);
+
+        //下级修改，陆续修改上级审核状态
+        Project project = this.projectService.getOne(pr.getProjectId());
+        project.setShStatus("0");
+        this.projectService.save(project);
         return pr.getId();
     }
 
@@ -416,7 +434,18 @@ public class FormController {
                     pd.setEndDateS(DateUtil.parseDate(pd.getEndDate(),"yyyy-MM-dd"));
                 }
             }
+            pd.setShStatus("0");
             this.projectRightDetailService.save(pd);
+
+            //修改下级，更新上级为待审核
+            ProjectRight projectRight = this.projectRightService.getOne(pd.getProjectRightId());
+            projectRight.setShStatus("0");
+            this.projectRightService.save(projectRight);
+
+            Project project = this.projectService.getOne(pd.getProjectId());
+            project.setShStatus("0");
+            this.projectService.save(project);
+
         }
         return "success";
     }
