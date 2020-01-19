@@ -33,6 +33,20 @@
               </div>
             </div>
 
+              <div class="layui-inline">
+                  <label class="layui-form-label">即将到期</label>
+                  <div class="layui-input-inline" style="width: 100px;">
+                      <input type="checkbox" name="jjdq" id="jjdq" jjdq="" lay-skin="switch">
+                  </div>
+              </div>
+
+            <div class="layui-inline">
+              <label class="layui-form-label">到期提醒</label>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" lay-filter="dqtx" name="dqtx"  id="dqtx" jjdq="dqtx" lay-skin="switch" lay-text="开启|关闭">
+              </div>
+            </div>
+
             <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="addBq">录入版权</button>
@@ -266,6 +280,29 @@
       type: 'date'
     });
 
+    //查即将到期
+    if(getCookie('alertFlag') == null || getCookie('alertFlag') == '1'){
+      $.ajax({
+        type: "POST",
+        url: "/hc/search/getDq",
+        dataType: "text",
+        success: function(res){
+          if(res > 0){
+            layer.alert("目前共有["+res+"]份即将到期（180天内）的版权信息，在该页面勾选【即将到期】选项后即可查询。同时，您可在该页面中选择是否需要该提醒。");
+          }
+        }
+      });
+    }
+
+    form.on('switch(dqtx)', function(data){
+      console.log(data.elem.checked); //开关是否开启，true或者false
+      if(data.elem.checked){
+        setCookie("alertFlag","1")
+      }else{
+        setCookie("alertFlag","0")
+      }
+    });
+
     //监听提交
     form.on('submit(search)', function(data){
       var yjName = "";
@@ -287,6 +324,11 @@
       data.field.yjName = yjName;
       data.field.ejName = ejName;
       data.field.first = '2';
+
+        $("[jjdq]:checked").each(function (i){
+            data.field.first = '4';
+        });
+
       table.reload('view', {
         url: '/hc/search/search'
         ,where: data.field //设定异步数据接口的额外参数
@@ -298,6 +340,23 @@
       return false;
     });
 
+    function getCookie(name)
+    {
+      var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+      if(arr=document.cookie.match(reg))
+
+        return unescape(arr[2]);
+      else
+        return null;
+    }
+    function setCookie(name,value)
+    {
+      var Days = 30;
+      var exp = new Date();
+      exp.setTime(exp.getTime() + Days*24*60*60*1000);
+      document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
     //初始化表格组件
     table.render({
       elem: '#view'

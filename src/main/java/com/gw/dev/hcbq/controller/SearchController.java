@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,19 +40,33 @@ public class SearchController {
         dto.setAsh("1");
         dto.setBsh("1");
         dto.setCsh("1");
-        if("1".equals(f) || (dto.getQljsks() == null && dto.getQljsjs() == null)){
-            //3是仅供首次访问首页时初始化使用的特殊查询项，按要求，结束时间和权利类型不填的话 也默认给这些条件
-            dto.setYj("3");
-            //dto.setHaveType("xy");
+        if("4".equals(f)){
+            dto.setFormType("bq");
+            dto.setAsh("1");
+            dto.setBsh("1");
+            dto.setCsh("1");
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DATE,180);
+            System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
             dto.setQljsks(new Date());
-            dto.setQljsjs(DateUtil.parseDate("2050-12-20","yyyy-MM-dd"));
+            dto.setQljsjs(calendar.getTime());
+        }else{
+            if("1".equals(f) || (dto.getQljsks() == null && dto.getQljsjs() == null)){
+                //3是仅供首次访问首页时初始化使用的特殊查询项，按要求，结束时间和权利类型不填的话 也默认给这些条件
+                dto.setYj("3");
+                //dto.setHaveType("xy");
+                dto.setQljsks(new Date());
+                dto.setQljsjs(DateUtil.parseDate("2050-12-20","yyyy-MM-dd"));
+            }
+            if(dto.getHaveType() == null || "".equals(dto.getHaveType())){
+                dto.setHaveType("xy");
+            }
+            if(dto.getHaveType() != null && "all".equals(dto.getHaveType())){
+                dto.setHaveType(null);
+            }
         }
-        if(dto.getHaveType() == null || "".equals(dto.getHaveType())){
-            dto.setHaveType("xy");
-        }
-        if(dto.getHaveType() != null && "all".equals(dto.getHaveType())){
-            dto.setHaveType(null);
-        }
+
         Page<Search> res =  this.searchService.findPageByCondition(dto);
         return new ResultVO(res.getContent(),res.getTotalElements());
     }
@@ -62,6 +78,25 @@ public class SearchController {
         dto.setAsh("sh");
         Page<Search> res =  this.searchService.findPageByCondition(dto);
         return new ResultVO(res.getContent(),res.getTotalElements());
+    }
+
+    @ResponseBody
+    @RequestMapping("getDq")
+    public Object getDq(Model model, HttpServletRequest request, SearchDto dto){
+        dto.setFormType("bq");
+        dto.setAsh("1");
+        dto.setBsh("1");
+        dto.setCsh("1");
+        dto.setPage(1);
+        dto.setLimit(5);
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE,180);
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+        dto.setQljsks(new Date());
+        dto.setQljsjs(calendar.getTime());
+        Page<Search> res =  this.searchService.findPageByCondition(dto);
+        return res.getTotalElements();
     }
 
     @RequestMapping("index")

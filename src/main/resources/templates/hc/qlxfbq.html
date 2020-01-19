@@ -26,7 +26,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">项目类别</label>
                 <div class="layui-input-block">
-                    <select name="projectType" id="projectType" lay-filter="projectTypeSelect" >
+                    <select name="projectType" id="projectType" lay-filter="projectTypeSelect" lay-verify="required">
                         <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" th:if="${pr.projectType == lx.value}" checked></option>
                         <option th:each="lx,lxStat : ${lxs}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${pr.projectType == lx.value}" ></option>
                     </select>
@@ -36,7 +36,7 @@
           <div class="layui-form-item">
             <label class="layui-form-label">权利名称</label>
             <div class="layui-input-block">
-              <select name="f_qlmc" lay-filter="qlmc" id="f_qlmc">
+              <select name="f_qlmc" lay-filter="qlmc" id="f_qlmc" lay-verify="required">
                   <option th:value="${pr.name}" th:text="${pr.name}"></option>
               </select>
             </div>
@@ -85,13 +85,13 @@
               </div>
             </fieldset>
           <div class="layui-input-block">
-            <textarea name="f_xzms" th:text="${pr.xzms}" id="f_xzms"  class="layui-textarea"></textarea>
+            <textarea name="f_xzms" th:text="${pr.xzms}" id="f_xzms" lay-verify="required"  class="layui-textarea"></textarea>
           </div>
       </div>
       <div class="layui-form-item layui-form-text" th:if="${qlzrxz == 'yes'}">
         <label class="layui-form-label">权利转让限制描述</label>
         <div class="layui-input-block">
-          <textarea name="f_zrxzms" th:text="${pr.zrxzms}" id="f_zrxzms" placeholder="请输入内容" class="layui-textarea"></textarea>
+          <textarea name="f_zrxzms"  lay-verify="required" th:text="${pr.zrxzms}" id="f_zrxzms" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
       </div>
           <hr class="layui-bg-blue"/>
@@ -102,8 +102,8 @@
               <label class="layui-form-label">地域</label>
               <div class="layui-input-block">
                 <select name="dj" dy=""  >
-                  <option th:each="lx,lxStat : ${dy}" th:value="${lx.value}" th:text="${lx.value}" th:if="${dypro.dy == lx.value}" checked></option>
-                  <option th:each="lx,lxStat : ${dy}" th:value="${lx.value}" th:text="${lx.value}" th:unless="${dypro.dy == lx.value}" ></option>
+                  <option th:each="lx,lxStat : ${dy}" lay-verify="required" th:value="${lx.value}" th:text="${lx.value}" th:if="${dypro.dy == lx.value}" checked></option>
+                  <option th:each="lx,lxStat : ${dy}" lay-verify="required" th:value="${lx.value}" th:text="${lx.value}" th:unless="${dypro.dy == lx.value}" ></option>
                 </select>
               </div>
             </div>
@@ -178,7 +178,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">著作权所属公司</label>
               <div class="layui-input-block">
-                <input type="text" name="title"  class="layui-input" ssgs="" th:value="${dypro.ssgs}">
+                <input type="text" name="title" lay-verify="required"  class="layui-input" ssgs="" th:value="${dypro.ssgs}">
               </div>
             </div>
             <div class="layui-form-item" th:if="${sq != 'no'}">
@@ -202,13 +202,13 @@
             <div class="layui-form-item" th:if="${htmc == 'yes'}">
               <label class="layui-form-label">合同名称</label>
               <div class="layui-input-block">
-                <input type="text" name="htmc"  class="layui-input" htmc="" th:value="${dypro.htmc}">
+                <input type="text" name="htmc" lay-verify="required"  class="layui-input" htmc="" th:value="${dypro.htmc}">
               </div>
             </div>
             <div class="layui-form-item" th:if="${htbc == 'yes'}">
               <label class="layui-form-label">合同编号</label>
               <div class="layui-input-block">
-                <input type="text" name="htbh"  class="layui-input" htbh="" th:value="${dypro.htbh}">
+                <input type="text" name="htbh" lay-verify="required"  class="layui-input" htbh="" th:value="${dypro.htbh}">
               </div>
             </div>
             <!--
@@ -235,7 +235,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">地域</label>
           <div class="layui-input-block">
-            <select name="dj" dy=""  >
+            <select name="dj" dy=""  lay-verify="required">
               <option th:each="lx,lxStat : ${dy}" th:value="${lx.value}" th:text="${lx.value}"></option>
             </select>
           </div>
@@ -304,7 +304,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">著作权所属公司</label>
           <div class="layui-input-block">
-            <input type="text" name="title"  class="layui-input" ssgs="">
+            <input type="text" name="title"  class="layui-input" ssgs="" lay-verify="required">
           </div>
         </div>
         <div class="layui-form-item" th:if="${sq != 'no'}">
@@ -328,13 +328,13 @@
         <div class="layui-form-item" th:if="${htmc == 'yes'}">
           <label class="layui-form-label">合同名称</label>
           <div class="layui-input-block">
-            <input type="text" name="htmc"  class="layui-input" htmc="">
+            <input type="text" name="htmc"   class="layui-input" htmc="" lay-verify="required">
           </div>
         </div>
         <div class="layui-form-item" th:if="${htbc == 'yes'}">
           <label class="layui-form-label">合同编号</label>
           <div class="layui-input-block">
-            <input type="text" name="htbh"  class="layui-input" htbh="">
+            <input type="text" name="htbh"  class="layui-input" htbh="" lay-verify="required">
           </div>
         </div>
         <!--
