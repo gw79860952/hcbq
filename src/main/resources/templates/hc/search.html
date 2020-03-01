@@ -65,6 +65,18 @@
               </div>
             </div>
 
+            <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
+              <div class="layui-input-block">
+                <button id="upload" class="layui-btn" type="button"> <i class="layui-icon">&#xe67c;</i>上传Excel</button>
+              </div>
+            </div>
+
+            <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
+              <div class="layui-input-block">
+                <button class="layui-btn"  lay-filter="export" type="button">导出Excel</button>
+              </div>
+            </div>
+
           </div>
 
           <div class="layui-collapse">
@@ -252,15 +264,15 @@
     base: '/static/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'form', 'laydate','jquery','table'], function(){
+  }).use(['index', 'form', 'laydate','jquery','table','upload'], function(){
     var $ = layui.$
     ,admin = layui.admin
     ,element = layui.element
     ,layer = layui.layer
     ,laydate = layui.laydate
-    ,form = layui.form
-            ,table = layui.table
-    ,$=layui.$;
+    ,form = layui.form,table = layui.table
+    ,$=layui.$
+    ,upload = layui.upload;
     form.render(null, 'component-form-group');
 
     laydate.render({
@@ -407,6 +419,24 @@
     form.on('submit(addFx)', function(data){
       window.open('/hc/form/show/new/fx');
       return false;
+    });
+
+    //上传
+      upload.render({
+      elem: '#upload' //绑定元素
+      ,url: '/hc/import/import' //上传接口
+      ,acceptMime:'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      ,exts:'xls|xlsx'
+      ,done: function(res){
+        layer.alert("上传成功。")
+      }
+      ,error: function(){
+        layer.alert("请求异常。")
+      },progress: function(n, elem){
+        var percent = n + '%' //获取进度百分比
+        element.progress('demo', percent); //可配合 layui 进度条元素使用
+        console.log(elem); //得到当前触发的元素 DOM 对象。可通过该元素定义的属性值匹配到对应的进度条。
+      }
     });
 
   });

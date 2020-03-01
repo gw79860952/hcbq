@@ -10,4 +10,6 @@ public interface ProjectRightDetailRepository extends JpaRepository<ProjectRight
     List<ProjectRightDetail> findByProjectRightId(String projectRightId);
 
     List<ProjectRightDetail> findByProjectId(String projectId);
+
+    void deleteByProjectId(String projectId);
 }

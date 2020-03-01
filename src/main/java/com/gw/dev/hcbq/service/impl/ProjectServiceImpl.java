@@ -71,4 +71,13 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> findByFormType(String formType) {
         return this.projectRepository.findByFormType(formType);
     }
+
+    @Override
+    public void deleteAll(String id) {
+        this.projectRightDetailRepository.deleteByProjectId(id);
+        this.projectRightRepository.deleteByProjectId(id);
+        this.projectRepository.deleteById(id);
+    }
+
+
 }
