@@ -73,7 +73,7 @@
 
             <div class="layui-inline" th:if="${session.user.access == '1' || session.user.access == '2'}">
               <div class="layui-input-block">
-                <button class="layui-btn"  lay-filter="export" type="button">导出Excel</button>
+                <button class="layui-btn" lay-submit  lay-filter="export">导出Excel</button>
               </div>
             </div>
 
@@ -418,6 +418,12 @@
     //监听新增发行
     form.on('submit(addFx)', function(data){
       window.open('/hc/form/show/new/fx');
+      return false;
+    });
+
+    //监听新增版权
+    form.on('submit(export)', function(data){
+      window.open('/hc/import/export');
       return false;
     });
 

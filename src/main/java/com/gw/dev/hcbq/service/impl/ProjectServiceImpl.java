@@ -10,6 +10,7 @@ import com.gw.dev.hcbq.repository.ProjectRightRepository;
 import com.gw.dev.hcbq.service.ProKfztService;
 import com.gw.dev.hcbq.service.ProjectService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -73,6 +74,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public void deleteAll(String id) {
         this.projectRightDetailRepository.deleteByProjectId(id);
         this.projectRightRepository.deleteByProjectId(id);
