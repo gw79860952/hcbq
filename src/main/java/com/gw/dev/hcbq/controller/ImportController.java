@@ -127,6 +127,10 @@ public class ImportController {
                             Cell h8 = row.createCell(7);
                         }
 
+                    }else{
+                        Cell h7 = row.createCell(6);
+                        h7.setCellValue(sdto.getYjName());
+                        Cell h8 = row.createCell(7);
                     }
                 }
 
@@ -144,6 +148,10 @@ public class ImportController {
                             Cell h10 = row.createCell(9);
                         }
 
+                    }else{
+                        Cell h9 = row.createCell(8);
+                        h9.setCellValue(sdto.getEjName());
+                        Cell h10 = row.createCell(9);
                     }
                 }
 
