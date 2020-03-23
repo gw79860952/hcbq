@@ -245,8 +245,16 @@ public class FormController {
         if(projectType.equals("剧本")){
             qlmcCode = "qlmc_jb";
         }
-        if(projectType.equals("电视剧") ||projectType.equals("电影") || projectType.equals("网络剧")){
+        if(projectType.equals("电视剧") ||projectType.equals("电影") || projectType.equals("网络剧")
+        ||projectType.equals("动画-剧集") ||projectType.equals("动画-电影")  ||projectType.equals("纪录片-剧集")
+                ||projectType.equals("纪录片-电影") ||projectType.equals("舞台剧") || projectType.equals("网络电影")){
             qlmcCode = "qlmc_jbjm";
+        }
+        if(projectType.equals("游戏")){
+            qlmcCode = "qlmc_yx";
+        }
+        if(projectType.equals("综艺节目")){
+            qlmcCode = "qlmc_zyjm";
         }
         List<DictionaryValue> qlmc = this.dicService.findByDicCode(qlmcCode);
         return qlmc;
@@ -278,7 +286,15 @@ public class FormController {
     @RequestMapping("getQlxfej")
     @ResponseBody
     public List<DictionaryValue> getQlXfej(String protype,String qlmc){
-        return this.dicService.findByDicCode(this.getEjqlDic(qlmc,protype));
+//        System.out.println(protype);
+//        List<DictionaryValue> res = new ArrayList<>();
+        List<DictionaryValue> li =  this.dicService.findByDicCode(this.getEjqlDic(qlmc,protype));
+//        for(DictionaryValue dv : li){
+//            if(!dv.getValue().contains(protype)){
+//                res.add(dv);
+//            }
+//        }
+        return li;
     }
 
     @RequestMapping("deleteDy")
@@ -473,6 +489,20 @@ public class FormController {
 
     public String getYjqlDic(String qlmc,String protype){
         String dicCode = "";
+        //这些类型和电影一样，这里做简化处理
+        if("动画-剧集".equals(protype) || "动画-电影".equals(protype) || "纪录片-剧集".equals(protype) || "纪录片-电影".equals(protype)
+                || "舞台剧".equals(protype) || "综艺节目".equals(protype) || "游戏".equals(protype) || "网络电影".equals(protype)){
+            protype = "电影";
+        }
+        if("脚本权利".equals(qlmc)){
+            qlmc = "剧本权利";
+        }
+        if("剧目权利（节目）".equals(qlmc)){
+            qlmc = "剧目权利";
+        }
+        if("节目权利".equals(qlmc)){
+            qlmc = "剧目权利";
+        }
         if("原著权利".equals(qlmc) && "小说".equals(protype)){
             dicCode = "xsyzql";
         }

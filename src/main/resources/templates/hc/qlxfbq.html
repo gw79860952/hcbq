@@ -439,6 +439,7 @@
                 $("#yjqlcheck").append(html);
                 form.render();
                 form.on('checkbox(gb)', function(data){
+                  var proType = $("#projectType").val();
                     if(data.elem.checked){
                         $.ajax({
                             type: "POST",
@@ -448,11 +449,13 @@
                             success: function(res){
                                 var html = "";
                                 for (var i = 0 ; i < res.length ; i++){
+                                  if(res[i].value.indexOf(proType) == -1){
                                     if(pro_yjql.indexOf(res[i].value) == -1){
-                                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                                      html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
                                     }else{
-                                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                                      html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
                                     }
+                                  }
                                 }
                                 //$("#ejqlcheck").empty();
                                 $("#ejqlcheck").append(html);
@@ -471,12 +474,15 @@
             dataType: "json",
             success: function(res){
                 var html = "";
+              var proType = $("#projectType").val();
                 for (var i = 0 ; i < res.length ; i++){
+                  if(res[i].value.indexOf(proType) == -1){
                     if(pro_yjql.indexOf(res[i].value) == -1){
-                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                      html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
                     }else{
-                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                      html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
                     }
+                  }
                 }
                 //$("#ejqlcheck").empty();
                 $("#ejqlcheck").append(html);
@@ -649,16 +655,20 @@
                 dataType: "json",
                 success: function(res){
                   var html = "";
+                  var proType = $("#projectType").val();
                   for (var i = 0 ; i < res.length ; i++){
-                    if(res[i].value == '其他'){
-                      html = html + "<input type=\"checkbox\" lay-filter='ejqtshow' name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
-                    }else{
-                      if(pro_yjql.indexOf(res[i].value) == -1){
-                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                    if(res[i].value.indexOf(proType) == -1){
+                      if(res[i].value == '其他'){
+                        html = html + "<input type=\"checkbox\" lay-filter='ejqtshow' name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
                       }else{
-                        html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        if(pro_yjql.indexOf(res[i].value) == -1){
+                          html = html + "<input type=\"checkbox\" name=\"f_ejql\" title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }else{
+                          html = html + "<input type=\"checkbox\" name=\"f_ejql\" checked title=\"" + res[i].value + "\" value=\"" + res[i].value + "\">";
+                        }
                       }
                     }
+
 
                   }
                   //$("#ejqlcheck").empty();

@@ -64,8 +64,11 @@ public class SearchServiceImpl implements SearchService {
                     predicates.add(predicate);
                 }
                 if (StringUtil.isNotBlank(dto.getProjectType())) {
-                    Predicate predicate = cb.equal(root.get("projectType").as(String.class), dto.getProjectType());
-                    predicates.add(predicate);
+                    CriteriaBuilder.In<String> in = cb.in(root.get("projectType").as(String.class));
+                    for(String s : dto.getProjectType().split(",")){
+                        in.value(s);
+                    }
+                    predicates.add(in);
                 }
                 if (StringUtil.isNotBlank(dto.getQlname())) {
                     Predicate predicate = cb.equal(root.get("qlname").as(String.class), dto.getQlname());
